@@ -59,14 +59,16 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
 - Updated all icon selectors to render Lucide SVG icons
 - Board icons, card icons, and template icons all use Lucide
 - **Fixed webpack tree-shaking**: Explicit named imports (150+ icons) in kanbanCard.tsx and blockIconSelector.tsx to prevent bundler removal
-- Current bundle: `main.cc8d257c.js` with all Lucide icons included
+- **Fixed sidebar rendering**: Updated sidebarBoardItem.tsx to render Lucide icons instead of displaying icon names as text
+- Current bundle: `main.5db29c38.js` with all Lucide icons included
 
 **Icon System Architecture**
 - `lucideIconList.ts`: Curated icon lists and emoji mapping (source of truth for emoji→Lucide conversion)
 - `lucidePicker.tsx/scss`: Modern searchable icon picker (8x grid, 352px wide)
-- `blockIconSelector.tsx`: Renders Lucide icons for cards in detail view (explicit imports to force bundling)
-- `kanbanCard.tsx`: Renders Lucide icons for cards in kanban board (explicit imports to force bundling)
-- `boardIconSelector.tsx`: Renders Lucide icons for boards
+- `blockIconSelector.tsx`: Renders Lucide icons for cards in detail view
+- `kanbanCard.tsx`: Renders Lucide icons for cards in kanban board
+- `boardIconSelector.tsx`: Renders Lucide icons for boards in icon picker
+- `sidebarBoardItem.tsx`: Renders Lucide icons for boards in left sidebar menu
 - `iconSelector.tsx`: Updated menu to use LucidePicker
 - `blockIcons.ts`: Random Lucide icon selection
 

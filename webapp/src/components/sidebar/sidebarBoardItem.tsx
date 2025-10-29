@@ -4,6 +4,7 @@ import React, {useCallback, useRef, useState} from 'react'
 import {useIntl} from 'react-intl'
 import {generatePath, useHistory, useRouteMatch} from 'react-router-dom'
 import {Draggable} from 'react-beautiful-dnd'
+import * as LucideIcons from 'lucide-react'
 
 import {Board} from '../../blocks/board'
 import {BoardView, IViewType} from '../../blocks/boardView'
@@ -14,6 +15,7 @@ import OptionsIcon from '../../widgets/icons/options'
 import Menu from '../../widgets/menu'
 import MenuWrapper from '../../widgets/menuWrapper'
 import BoardPermissionGate from '../permissions/boardPermissionGate'
+import {convertEmojiToLucideIcon} from '../../lucideIconList'
 
 import './sidebarBoardItem.scss'
 import {CategoryBoards, updateBoardCategories} from '../../store/sidebar'
@@ -192,6 +194,22 @@ const SidebarBoardItem = (props: Props) => {
 
     const boardItemRef = useRef<HTMLDivElement>(null)
 
+    // Render board icon as Lucide component
+    const renderBoardIcon = () => {
+        if (!board.icon) {
+            return <CompassIcon icon='product-boards'/>
+        }
+        
+        const iconName = convertEmojiToLucideIcon(board.icon)
+        const IconComponent = (LucideIcons as any)[iconName]
+        
+        if (IconComponent) {
+            return <IconComponent size={16} />
+        }
+        
+        return <LucideIcons.Circle size={16} />
+    }
+
     const title = board.title || intl.formatMessage({id: 'Sidebar.untitled-board', defaultMessage: '(Untitled Board)'})
     return (
         <Draggable
@@ -211,7 +229,7 @@ const SidebarBoardItem = (props: Props) => {
                         ref={boardItemRef}
                     >
                         <div className='octo-sidebar-icon'>
-                            {board.icon || <CompassIcon icon='product-boards'/>}
+                            {renderBoardIcon()}
                         </div>
                         <div
                             className='octo-sidebar-title'
