@@ -2,21 +2,61 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
+        <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'>
 
     <title><%= htmlWebpackPlugin.options.title %></title>
 
     <script>window.baseURL = '{{.BaseURL}}'</script>
-    <link rel="icon" href="{{.BaseURL}}/static/favicon.svg?v=1" />
+    <link rel="icon" href="{{.BaseURL}}/static/app-icon.png?v=2" />
+    
+    <style>
+        :root {
+            --center-channel-bg-rgb: 255, 255, 255;
+            --center-channel-color-rgb: 9, 9, 11;
+            --sidebar-bg-rgb: 24, 24, 27;
+            --sidebar-text-rgb: 250, 250, 250;
+            --button-color-rgb: 255, 255, 255;
+            --button-bg-rgb: 24, 24, 27;
+            --button-danger-color-rgb: 255, 255, 255;
+            --button-danger-bg-rgb: 239, 68, 68;
+            --link-color-rgb: 59, 130, 246;
+            --error-text-rgb: 239, 68, 68;
+            --border-color: 228, 228, 231;
+            --muted-bg: 244, 244, 245;
+            --accent-rgb: 99, 102, 241;
+            --link-visited-color-rgb: #551a8b;
+            --prop-default: #fff;
+            --prop-gray: #f4f4f5;
+            --prop-brown: #fef3c7;
+            --prop-orange: #fed7aa;
+            --prop-yellow: #fef08a;
+            --prop-green: #d9f99d;
+            --prop-blue: #bfdbfe;
+            --prop-purple: #e9d5ff;
+            --prop-pink: #fbcfe8;
+            --prop-red: #fecaca;
+            --elevation-1: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --elevation-2: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+            --elevation-3: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --elevation-4: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --elevation-5: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --elevation-6: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --default-rad: 8px;
+            --modal-rad: 12px;
+            --button-rad: 6px;
+            --input-rad: 6px;
+            --card-rad: 10px;
+        }
+    </style>
 </head>
 
 <body class="focalboard-body">
-	<div id="focalboard-app">
-	</div>
+        <div id="focalboard-app">
+        </div>
 
-	<div id="focalboard-root-portal">
-	</div>
+        <div id="focalboard-root-portal">
+        </div>
 </body>
 
 </html>
