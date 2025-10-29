@@ -41,13 +41,14 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
 **ShadCN Violet Theme** (`webapp/src/theme.ts`)
 - Light, clean violet theme inspired by ShadCN design system
 - Violet primary colors (rgb(124, 58, 237)) for buttons, links, and accents
-- Dark violet sidebar (rgb(124, 58, 237)) with white text (rgb(255, 255, 255))
+- **Dark rich violet sidebar** (rgb(88, 28, 135)) with white text (rgb(255, 255, 255))
 - White main background with high-contrast dark text (rgb(9, 9, 11))
 - Soft elevation shadows (ShadCN-inspired layered shadows)
 - Larger border radius (8px default, 12px modals, 10px cards)
 - Consistent RGB triplet format for all color variables
+- **Inter font family** (ShadCN standard) loaded from Google Fonts
 - Style backups stored in `/backup-css/` and `/backup-css-current/` for easy rollback
-- Current bundle: `main.b691acd8.js` with violet theme
+- Current bundle: `main.389dd80e.js` with violet theme
 
 **Complete Emoji Replacement with Lucide Icons**
 - Installed `lucide-react` package for professional icon system
