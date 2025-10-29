@@ -1,0 +1,31 @@
+main.ea5365e4.js:369 [1761715250.84] getCurrentBoardViews boardId: undefined views: undefined
+main.ea5365e4.js:369 [1761715250.86] Unable to find team in store. TeamID: 0
+main.ea5365e4.js:369 [1761715250.86] First component subscribing to team 0
+main.ea5365e4.js:369 [1761715250.86] useWEbsocket adding onChange handler
+main.ea5365e4.js:369 [1761715250.86] OctoClient baseURL: https://7c5523e4-7607-43b9-ac85-af3aad1fefd5-00-26n8h3mqf38v.kirk.replit.dev
+main.ea5365e4.js:369 [1761715250.86] getCurrentBoardViews boardId: bkb8aixg6m3dr8jwd5w1u8et8gc views: undefined
+main.ea5365e4.js:369 [1761715250.86] WSClient serverUrl: https://7c5523e4-7607-43b9-ac85-af3aad1fefd5-00-26n8h3mqf38v.kirk.replit.dev
+main.ea5365e4.js:369 [1761715250.86] WSClient open: wss://7c5523e4-7607-43b9-ac85-af3aad1fefd5-00-26n8h3mqf38v.kirk.replit.dev/ws
+main.ea5365e4.js:369 [1761715250.86] useWebsocket cleanup
+main.ea5365e4.js:369 [1761715250.86] Last subscription to team 0 being removed
+main.ea5365e4.js:369 [1761715250.86] First component subscribing to team 0
+main.ea5365e4.js:369 [1761715250.86] useWEbsocket adding onChange handler
+main.ea5365e4.js:369 [1761715251.15] Cloud limits: cards=undefined   views=undefined
+main.ea5365e4.js:369 [1761715251.22] WSClient webSocket opened.
+main.ea5365e4.js:369 [1761715251.22] Sending commands for the registered subscriptions
+main.ea5365e4.js:369 [1761715251.23] useWebsocket cleanup
+main.ea5365e4.js:369 [1761715251.24] useWEbsocket adding onChange handler
+main.ea5365e4.js:369 [1761715251.44] Cloud limits: cards=undefined   views=undefined
+main.ea5365e4.js:369 [1761715251.55] getCurrentBoardViews boardId: bkb8aixg6m3dr8jwd5w1u8et8gc views: undefined
+main.ea5365e4.js:369 [1761715251.55] Manual sort
+main.ea5365e4.js:369 [1761715251.55] 5 propertyValues
+main.ea5365e4.js:369 Unmapped emoji: 💵 normalized: 💵 codes: 1f4b5
+main.ea5365e4.js:369 Unmapped emoji: 🖋️ normalized: 🖋 codes: 1f58b fe0f
+main.ea5365e4.js:369 Unmapped emoji: 🔬 normalized: 🔬 codes: 1f52c
+main.ea5365e4.js:369 Unmapped emoji: LayoutGrid normalized: LayoutGrid codes: 4c 61 79 6f 75 74 47 72 69 64
+main.ea5365e4.js:369 [1761715251.77] Manual sort
+main.ea5365e4.js:369 [1761715251.77] 5 propertyValues
+main.ea5365e4.js:369 Unmapped emoji: 💵 normalized: 💵 codes: 1f4b5
+main.ea5365e4.js:369 Unmapped emoji: 🖋️ normalized: 🖋 codes: 1f58b fe0f
+main.ea5365e4.js:369 Unmapped emoji: 🔬 normalized: 🔬 codes: 1f52c
+main.ea5365e4.js:369 Unmapped emoji: LayoutGrid normalized: LayoutGrid codes: 4c 61 79 6f 75 74 47 72 69 64

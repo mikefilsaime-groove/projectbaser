@@ -125,9 +125,12 @@ const emojiToLucideMap: {[key: string]: string} = {
     '🔓': 'Unlock',
     '🔑': 'Key',
     '💰': 'DollarSign',
+    '💵': 'Banknote',
     '💳': 'CreditCard',
     '🛒': 'ShoppingCart',
     '🎁': 'Gift',
+    '🖋': 'PenTool',
+    '🔬': 'Microscope',
     
     // Common symbols
     '➕': 'Plus',
@@ -157,6 +160,11 @@ const normalizeEmojiKey = (emoji: string): string => {
 function convertEmojiToLucideIcon(emoji: string): string {
     if (!emoji) {
         return 'Circle'
+    }
+
+    // If it's already a Lucide icon name (starts with uppercase letter), return as-is
+    if (/^[A-Z]/.test(emoji)) {
+        return emoji
     }
 
     // Try direct match first

@@ -20,7 +20,7 @@ import {
     // Additional icons from emoji mapping
     Hand, Move, CheckCircle2, AlertTriangle, Flame, Sparkles, CalendarDays,
     CalendarCheck, BarChart3, TrendingDown, Film, Sliders, Glasses,
-    BookOpen, Laptop, Key, Trash2, Edit3,
+    BookOpen, Laptop, Key, Trash2, Edit3, Banknote, PenTool, Microscope,
 } from 'lucide-react'
 
 import {Board, IPropertyTemplate} from '../../blocks/board'
@@ -57,7 +57,7 @@ const LucideIcons: Record<string, any> = {
     // Additional icons from emoji mapping
     Hand, Move, CheckCircle2, AlertTriangle, Flame, Sparkles, CalendarDays,
     CalendarCheck, BarChart3, TrendingDown, Film, Sliders, Glasses,
-    BookOpen, Laptop, Key, Trash2, Edit3,
+    BookOpen, Laptop, Key, Trash2, Edit3, Banknote, PenTool, Microscope,
 }
 
 export const OnboardingCardClassName = 'onboardingCard'
