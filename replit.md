@@ -72,9 +72,17 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
 **Webpack Content-Hash Fix for Replit CDN**
 - Replit's front-door proxy/CDN was caching `/static/main.js` and ignoring cache-control headers and query-string hashes
 - Solution: Changed webpack output to use content-hashed filenames: `[name].[contenthash:8].js`
-- Now generates files like `main.eeee545e.js` instead of `main.js?hash`
+- Now generates files like `main.3ce10848.js` instead of `main.js?hash`
 - Forces Replit's CDN to fetch new files when bundle content changes
 - Disabled HtmlWebpackPlugin's `hash: true` option (redundant with contenthash in filename)
+
+**Emoji Normalization Fix**
+- Database stored emojis with variation selectors (U+FE0F) and zero-width joiners (U+200D)
+- Example: stored as `📝️` (length 3) instead of `📝` (length 2)
+- Updated `convertEmojiToLucideIcon` in `lucideIconList.ts` to normalize emoji input before lookup
+- Strips variation selectors and zero-width joiners: `.replace(/[\uFE0F\u200D]/g, '').trim()`
+- Now correctly maps stored emoji variants to Lucide icons
+- Also fixed dynamic favicon override in `utils.ts` to use static `favicon.svg` instead of emoji data URIs
 
 ### Rebranding to ProjectBaser
 1. Implemented Lucide "Layers" icon (inline SVG) consistently across all pages:
