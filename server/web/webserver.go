@@ -87,7 +87,7 @@ func (ws *Server) AddRoutes(rs RoutedService) {
 func (ws *Server) registerRoutes() {
         ws.Router().PathPrefix("/static").Handler(http.StripPrefix(ws.basePrefix+"/static/", http.FileServer(http.Dir(filepath.Join(ws.rootPath, "static")))))
         
-        ws.Router().HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        ws.Router().PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
                 if r.URL.Path == "/" {
                         landingPage := filepath.Join(ws.rootPath, "static", "landing", "index.html")
                         if fileExists(landingPage) {
