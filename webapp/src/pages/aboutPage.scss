@@ -1,0 +1,152 @@
+.AboutPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+
+    .about-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        width: 100%;
+        padding: 3rem;
+    }
+
+    .about-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid #f0f0f0;
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: #666;
+            margin: 0;
+        }
+    }
+
+    .about-content {
+        .about-section {
+            margin-bottom: 2.5rem;
+
+            h2 {
+                font-size: 1.75rem;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                font-size: 1rem;
+                line-height: 1.6;
+                color: #555;
+                margin-bottom: 1rem;
+            }
+
+            .features-list {
+                list-style: none;
+                padding: 0;
+
+                li {
+                    font-size: 1rem;
+                    line-height: 1.6;
+                    color: #555;
+                    margin-bottom: 1rem;
+                    padding-left: 1.5rem;
+                    position: relative;
+
+                    &:before {
+                        content: '✓';
+                        position: absolute;
+                        left: 0;
+                        color: #667eea;
+                        font-weight: bold;
+                        font-size: 1.2rem;
+                    }
+
+                    strong {
+                        color: #333;
+                    }
+                }
+            }
+
+            &.version-info {
+                text-align: center;
+                padding-top: 2rem;
+                border-top: 2px solid #f0f0f0;
+                margin-top: 3rem;
+
+                .version {
+                    font-size: 0.9rem;
+                    color: #888;
+                    margin-bottom: 0.5rem;
+                }
+
+                .copyright {
+                    font-size: 0.85rem;
+                    color: #aaa;
+                }
+            }
+        }
+    }
+
+    .about-actions {
+        text-align: center;
+        margin-top: 2rem;
+
+        .back-button {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: #5568d3;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .AboutPage {
+        padding: 1rem;
+
+        .about-container {
+            padding: 2rem 1.5rem;
+        }
+
+        .about-header {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+        }
+
+        .about-content {
+            .about-section {
+                h2 {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}

@@ -75,7 +75,7 @@ const SidebarUserMenu = () => {
                             id='about'
                             name={intl.formatMessage({id: 'Sidebar.about', defaultMessage: 'About ProjectBaser'})}
                             onClick={async () => {
-                                // ProjectBaser - custom project management tool
+                                history.push('/about')
                             }}
                         />
                     </Menu>
