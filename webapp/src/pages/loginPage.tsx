@@ -42,7 +42,7 @@ const LoginPage = () => {
         <div className='LoginPage'>
             <div className='login-container'>
                 <div className='login-header'>
-                    <img src='/static/landing/logo.png' alt='ProjectBaser' className='login-logo'/>
+                    <img src='/static/app-icon.png' alt='ProjectBaser' className='login-logo'/>
                     <h1>ProjectBaser</h1>
                 </div>
                 <form

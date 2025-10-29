@@ -46,7 +46,7 @@ const RegisterPage = () => {
         <div className='RegisterPage'>
             <div className='register-container'>
                 <div className='register-header'>
-                    <img src='/static/landing/logo.png' alt='ProjectBaser' className='register-logo'/>
+                    <img src='/static/app-icon.png' alt='ProjectBaser' className='register-logo'/>
                     <h1>ProjectBaser</h1>
                 </div>
                 <form
