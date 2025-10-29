@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProjectBaser - Project Management for Technical Teams</title>
-    <link rel="icon" href="/static/favicon.svg" />
+    <link rel="icon" href="/static/favicon.png" />
     <style>
         * {
             margin: 0;
@@ -109,63 +109,28 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        /* Features Section */
-        .section {
-            padding: 80px 0;
+        /* Icon styles */
+        .icon {
+            width: 48px;
+            height: 48px;
+            stroke: #667eea;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 42px;
-            margin-bottom: 20px;
-            font-weight: 700;
-            color: #2d3748;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 20px;
-            margin-bottom: 60px;
-            color: #718096;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .feature-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-        }
-
-        .feature-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #2d3748;
-        }
-
-        .feature-card p {
-            color: #718096;
-            line-height: 1.8;
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            stroke: #667eea;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 12px;
         }
 
         /* Alternating Content Sections */
@@ -197,6 +162,8 @@
             margin-bottom: 20px;
             color: #2d3748;
             font-weight: 700;
+            display: flex;
+            align-items: center;
         }
 
         .content-text p {
@@ -216,6 +183,32 @@
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* Section */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 60px;
+            color: #718096;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Templates Grid */
@@ -239,9 +232,10 @@
             transform: translateY(-5px);
         }
 
-        .template-emoji {
-            font-size: 48px;
+        .template-icon {
             margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
         }
 
         .template-card h4 {
@@ -263,11 +257,27 @@
             border-radius: 8px;
             border-left: 4px solid #667eea;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
         }
 
         .feature-item h4 {
             color: #2d3748;
-            margin-bottom: 5px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            stroke: #667eea;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-right: 10px;
+            flex-shrink: 0;
         }
 
         /* CTA Section */
@@ -320,7 +330,7 @@
                 direction: ltr;
             }
 
-            .features-grid {
+            .templates-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -352,7 +362,10 @@
         <div class="container">
             <div class="content-row">
                 <div class="content-text">
-                    <h2>🚀 Accelerate Productivity</h2>
+                    <h2>
+                        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                        Accelerate Productivity
+                    </h2>
                     <p>Centralize, plan, and track all your work in one place. ProjectBaser helps your organization maintain a single source of truth, so your teams stay aligned to complete tasks, reach milestones, and achieve their goals.</p>
                 </div>
                 <div class="content-image">
@@ -367,7 +380,10 @@
         <div class="container">
             <div class="content-row reverse">
                 <div class="content-text">
-                    <h2>😮 Organize and Visualize Work, Your Way</h2>
+                    <h2>
+                        <svg class="section-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        Organize and Visualize Work, Your Way
+                    </h2>
                     <p>Work in the way that suits you best. Manage all your tasks on a Kanban, table, gallery, and calendar view. Focus on the highest priority items with board filters, and save an unlimited number of filtered views for quick access later.</p>
                 </div>
                 <div class="content-image">
@@ -382,7 +398,10 @@
         <div class="container">
             <div class="content-row">
                 <div class="content-text">
-                    <h2>🤝 Align Your Teams with Real-Time Collaboration</h2>
+                    <h2>
+                        <svg class="section-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        Align Your Teams with Real-Time Collaboration
+                    </h2>
                     <p>Keep everyone in sync with card comments, @mention teammates to get their attention, and set board permissions to share your board with the entire team or specific individuals.</p>
                 </div>
                 <div class="content-image">
@@ -395,31 +414,46 @@
     <!-- Templates -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">🙌 Tons of Templates to Get You Started</h2>
+            <h2 class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Tons of Templates to Get You Started
+            </h2>
             <p class="section-subtitle">Get started fast with our pre-built templates or create a fully custom board from scratch.</p>
             <div class="templates-grid">
                 <div class="template-card">
-                    <div class="template-emoji">🎯</div>
+                    <div class="template-icon">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
                     <h4>Project Tasks</h4>
                 </div>
                 <div class="template-card">
-                    <div class="template-emoji">📅</div>
+                    <div class="template-icon">
+                        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
                     <h4>Content Calendar</h4>
                 </div>
                 <div class="template-card">
-                    <div class="template-emoji">⛳</div>
+                    <div class="template-icon">
+                        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
                     <h4>Company Goals & OKRs</h4>
                 </div>
                 <div class="template-card">
-                    <div class="template-emoji">🗺️</div>
+                    <div class="template-icon">
+                        <svg class="icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    </div>
                     <h4>Roadmap</h4>
                 </div>
                 <div class="template-card">
-                    <div class="template-emoji">🍩</div>
+                    <div class="template-icon">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
                     <h4>Meeting Agenda</h4>
                 </div>
                 <div class="template-card">
-                    <div class="template-emoji">👋</div>
+                    <div class="template-icon">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
                     <h4>Welcome to ProjectBaser</h4>
                 </div>
             </div>
@@ -432,40 +466,40 @@
             <h2 class="section-title">Feature Highlights</h2>
             <div class="feature-list">
                 <div class="feature-item">
-                    <h4>✅ Unlimited Boards</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><path d="M3 3h18v18H3zM21 9H3M9 21V9"></path></svg>Unlimited Boards</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>🎨 Customizable Templates</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Customizable Templates</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>📁 File Sharing</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>File Sharing</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>🔒 User Permissions</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>User Permissions</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>📊 Group, Filter, and Sort Tasks</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>Group, Filter, and Sort Tasks</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>⚡ Real-Time Collaboration</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Real-Time Collaboration</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>🗂️ Unlimited Custom Attributes</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>Unlimited Custom Attributes</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>📝 Meeting Notes</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>Meeting Notes</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>💾 Archiving & Back-up Snapshots</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Archiving & Back-up Snapshots</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>🎯 Priority Labeling</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Priority Labeling</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>💬 Team Messaging</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Team Messaging</h4>
                 </div>
                 <div class="feature-item">
-                    <h4>👥 Multi-Team Views</h4>
+                    <h4><svg class="feature-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Multi-Team Views</h4>
                 </div>
             </div>
         </div>
