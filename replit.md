@@ -51,7 +51,10 @@ ProjectBaser is a self-hosted project management tool for technical teams. Built
 6. Updated all UI references from "Focalboard" to "ProjectBaser"
 7. Removed all open source references and pricing information
 8. Downloaded and integrated professional stock images
-9. Modified Go server routing to serve landing page at root /
+9. Modified Go server routing:
+   - Landing page shown at root (/) for non-authenticated users
+   - Logged-in users automatically bypass landing page and go directly to app
+   - Checks for FOCALBOARDAUTHTOKEN cookie to determine authentication state
 
 ### Previous Setup
 1. Installed Node.js 20 and Go 1.21
@@ -98,7 +101,10 @@ ProjectBaser is a self-hosted project management tool for technical teams. Built
 - **Telemetry**: Disabled
 - **Public Sharing**: Disabled by default
 - **Authentication Mode**: Native (username/password)
-- **Routing**: Custom routing serves landing page at / and SPA for all other routes
+- **Routing**: 
+  - Landing page at / for unauthenticated users
+  - App dashboard at / for authenticated users (checks FOCALBOARDAUTHTOKEN cookie)
+  - SPA for all other routes
 
 ## How to Use
 1. Visit the landing page at the root URL
