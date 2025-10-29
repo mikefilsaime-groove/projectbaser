@@ -66,7 +66,7 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
   - Status: "Completed"→CheckCircle, "In Progress"→Play, "Blocked"→XCircle
   - Types: "Bug"→Bug, "Epic"→Mountain, "Feature"→Construction, "Task"→CheckSquare
   - 20+ intelligent pattern matches for automatic icon selection
-- Current bundle: `main.66963fdc.js` with all Lucide icons, property badge icons, and enhanced drag animations
+- Current bundle: `main.5d92b26a.js` with all Lucide icons, property badge icons, and enhanced drag animations
 
 **Enhanced Drag-and-Drop Animations**
 Complete overhaul of kanban card drag UX for professional, intuitive feel:

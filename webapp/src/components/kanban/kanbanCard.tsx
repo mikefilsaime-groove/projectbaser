@@ -26,6 +26,8 @@ import {
     CloudRainWind, Trees, Bug, Bird, Cat, Construction,
 } from 'lucide-react'
 
+import {getEmptyImage} from 'react-dnd-html5-backend'
+
 import {Board, IPropertyTemplate} from '../../blocks/board'
 import {Card} from '../../blocks/card'
 import {useSortable} from '../../hooks/sortable'
@@ -90,6 +92,13 @@ const KanbanCard = (props: Props) => {
     if (props.isManualSort && isOver) {
         className += ' dragover'
     }
+
+    // Disable react-dnd's default drag preview (prevent ghost card)
+    React.useEffect(() => {
+        if (preview) {
+            preview(getEmptyImage(), { captureDraggingState: true })
+        }
+    }, [preview])
 
     // Track drag direction for dynamic tilt
     const dragStateRef = React.useRef<{
