@@ -1,0 +1,18 @@
+:root {
+    // Modern ShadCN-inspired color palette
+    --center-channel-bg-rgb: 255, 255, 255;
+    --center-channel-color-rgb: 9, 9, 11;  // Darker, better contrast
+    --sidebar-bg-rgb: 24, 24, 27;  // Modern dark sidebar
+    --sidebar-text-rgb: 250, 250, 250;
+    --button-color-rgb: 255, 255, 255;
+    --button-bg-rgb: 24, 24, 27;  // Modern dark buttons
+    --button-danger-color-rgb: 255, 255, 255;
+    --button-danger-bg-rgb: 239, 68, 68;  // Modern red
+    --link-color-rgb: 59, 130, 246;  // Modern blue
+    --error-text-rgb: 239, 68, 68;  // Modern red
+    
+    // Additional modern colors
+    --border-color: 228, 228, 231;  // Subtle borders
+    --muted-bg: 244, 244, 245;  // Muted backgrounds
+    --accent-rgb: 99, 102, 241;  // Modern accent color
+}

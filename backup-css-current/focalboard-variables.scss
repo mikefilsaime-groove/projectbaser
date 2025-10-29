@@ -1,0 +1,30 @@
+:root {
+    --link-visited-color-rgb: #551a8b;
+
+    // Label Colors - Modern ShadCN-inspired palette
+    --prop-default: #fff;
+    --prop-gray: #f4f4f5;
+    --prop-brown: #fef3c7;
+    --prop-orange: #fed7aa;
+    --prop-yellow: #fef08a;
+    --prop-green: #d9f99d;
+    --prop-blue: #bfdbfe;
+    --prop-purple: #e9d5ff;
+    --prop-pink: #fbcfe8;
+    --prop-red: #fecaca;
+
+    // Elevations - Modern soft shadows (ShadCN-inspired)
+    --elevation-1: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --elevation-2: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --elevation-3: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --elevation-4: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --elevation-5: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --elevation-6: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    // Radius - Modern larger radius
+    --default-rad: 8px;
+    --modal-rad: 12px;
+    --button-rad: 6px;
+    --input-rad: 6px;
+    --card-rad: 10px;
+}
