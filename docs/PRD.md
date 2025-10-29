@@ -1,5 +1,27 @@
 # ProjectBaser - Product Requirements Document
 
+## ⚠️ CRITICAL: How Theme/Color Changes Work
+
+**DO NOT EDIT HTML TEMPLATES FOR THEME CHANGES!**
+
+Theme colors in this application are **dynamically set by JavaScript at runtime**, not by HTML templates.
+
+**The ONLY file to edit for theme/color changes:**
+- **`webapp/src/theme.ts`** - This is where ALL theme colors are defined
+
+**Why?**
+- The JavaScript in `theme.ts` reads the theme definitions and **dynamically sets CSS variables** on `document.documentElement.style` when the page loads
+- The HTML template (`webapp/html-templates/page.ejs`) contains **inline styles as fallback only**, but they are immediately overridden by JavaScript
+- Editing the HTML template will NOT change the live app colors
+
+**Workflow for theme changes:**
+1. Edit `webapp/src/theme.ts` (change `defaultTheme` and/or `lightTheme` objects)
+2. Rebuild webpack: `cd webapp && npm run pack`
+3. Restart server workflow
+4. Hard refresh browser (Ctrl+Shift+R or Cmd+Shift+R)
+
+---
+
 ## Product Overview
 
 **Product Name:** ProjectBaser  

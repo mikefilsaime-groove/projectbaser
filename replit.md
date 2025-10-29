@@ -3,6 +3,43 @@
 ## Overview
 ProjectBaser is a self-hosted project management tool for technical teams. Built on Focalboard's architecture, it has been completely rebranded with modern styling and a professional landing page.
 
+## ⚠️ CRITICAL: How Theme/Color Changes Work
+
+**DO NOT EDIT HTML TEMPLATES FOR THEME CHANGES!**
+
+Theme colors in this application are **dynamically set by JavaScript at runtime**, not by HTML templates.
+
+**The ONLY file to edit for theme/color changes:**
+- **`webapp/src/theme.ts`** - This is where ALL theme colors are defined
+
+**Why?**
+- The JavaScript in `theme.ts` reads the theme definitions and **dynamically sets CSS variables** on `document.documentElement.style` when the page loads
+- The HTML template (`webapp/html-templates/page.ejs`) contains **inline styles as fallback only**, but they are immediately overridden by JavaScript
+- Editing the HTML template will NOT change the live app colors
+
+**Workflow for theme changes:**
+1. Edit `webapp/src/theme.ts` (change `defaultTheme` and/or `lightTheme` objects)
+2. Rebuild webpack: `cd webapp && npm run pack`
+3. Restart server workflow
+4. Hard refresh browser (Ctrl+Shift+R or Cmd+Shift+R)
+
+**Example:**
+```typescript
+// webapp/src/theme.ts
+export const defaultTheme = {
+    mainBg: '255, 255, 255',        // Main background color
+    mainFg: '9, 9, 11',             // Main text color
+    buttonBg: '124, 58, 237',       // Button background (violet)
+    buttonFg: '247, 250, 252',      // Button text color
+    sidebarBg: '88, 28, 135',       // Sidebar background (dark violet)
+    sidebarFg: '255, 255, 255',     // Sidebar text (white)
+    link: '124, 58, 237',           // Link color (violet)
+    // ... etc
+}
+```
+
+---
+
 ## Current State
 - **Status**: Fully functional and running
 - **Branding**: Complete ProjectBaser rebrand with modern blue/purple gradient design
