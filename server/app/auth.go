@@ -113,19 +113,34 @@ func (a *App) Login(username, email, password, mfaToken string) (string, error) 
                 authService = "native"
         }
 
+        // Get user's primary team for session context
+        team, err := a.store.GetPrimaryTeamForUser(user.ID)
+        if err != nil {
+                a.logger.Warn("User has no team assigned, cannot login", 
+                        mlog.String("userID", user.ID),
+                        mlog.Err(err))
+                return "", errors.New("User is not assigned to any team. Please contact support.")
+        }
+
         session := model.Session{
                 ID:          utils.NewID(utils.IDTypeSession),
                 Token:       utils.NewID(utils.IDTypeToken),
                 UserID:      user.ID,
                 AuthService: authService,
-                Props:       map[string]interface{}{},
+                Props:       map[string]interface{}{
+                        "team_id": team.ID,
+                },
         }
-        err := a.store.CreateSession(&session)
+        err = a.store.CreateSession(&session)
         if err != nil {
                 return "", errors.Wrap(err, "unable to create session")
         }
 
         a.metrics.IncrementLoginCount(1)
+
+        a.logger.Info("User logged in successfully", 
+                mlog.String("userID", user.ID),
+                mlog.String("teamID", team.ID))
 
         // TODO: MFA verification
         return session.Token, nil
