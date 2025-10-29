@@ -102,28 +102,36 @@ const KanbanCard = (props: Props) => {
     const handleDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
         if (!cardRef.current) return
         
-        // Hide default drag ghost with transparent image
-        const emptyImage = document.createElement('img')
-        emptyImage.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-        e.dataTransfer.setDragImage(emptyImage, 0, 0)
-        
         // Track initial position
         dragStateRef.current.lastX = e.clientX
         dragStateRef.current.rotation = 0
         
+        // Create a completely transparent 1x1 image to hide default drag ghost
+        const canvas = document.createElement('canvas')
+        canvas.width = 1
+        canvas.height = 1
+        const ctx = canvas.getContext('2d')
+        if (ctx) {
+            ctx.clearRect(0, 0, 1, 1)
+        }
+        e.dataTransfer.setDragImage(canvas, 0, 0)
+        
         // Create floating element that follows cursor
         const floatingCard = cardRef.current.cloneNode(true) as HTMLElement
-        floatingCard.style.position = 'fixed'
-        floatingCard.style.left = `${e.clientX}px`
-        floatingCard.style.top = `${e.clientY}px`
-        floatingCard.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(1.05)'
-        floatingCard.style.boxShadow = 'rgba(0, 0, 0, 0.25) 0 16px 32px, rgba(0, 0, 0, 0.15) 0 8px 16px'
-        floatingCard.style.borderRadius = '8px'
-        floatingCard.style.opacity = '0.9'
-        floatingCard.style.pointerEvents = 'none'
-        floatingCard.style.zIndex = '10000'
-        floatingCard.style.transition = 'transform 100ms ease-out'
-        floatingCard.style.width = `${cardRef.current.offsetWidth}px`
+        floatingCard.id = 'drag-preview-floating'
+        floatingCard.style.cssText = `
+            position: fixed;
+            left: ${e.clientX}px;
+            top: ${e.clientY}px;
+            transform: translate(-50%, -50%) rotate(0deg) scale(1.05);
+            box-shadow: rgba(0, 0, 0, 0.25) 0 16px 32px, rgba(0, 0, 0, 0.15) 0 8px 16px;
+            border-radius: 8px;
+            opacity: 0.9;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 100ms ease-out;
+            width: ${cardRef.current.offsetWidth}px;
+        `
         
         document.body.appendChild(floatingCard)
         dragStateRef.current.floatingElement = floatingCard
@@ -131,7 +139,7 @@ const KanbanCard = (props: Props) => {
 
     // Update position and tilt based on drag direction
     const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-        if (!dragStateRef.current.floatingElement || e.clientX === 0) return
+        if (!dragStateRef.current.floatingElement || e.clientX === 0 || e.clientY === 0) return
         
         const deltaX = e.clientX - dragStateRef.current.lastX
         dragStateRef.current.lastX = e.clientX
@@ -148,8 +156,11 @@ const KanbanCard = (props: Props) => {
 
     // Clean up on drag end
     const handleDragEnd = useCallback(() => {
-        if (dragStateRef.current.floatingElement && dragStateRef.current.floatingElement.parentElement) {
-            document.body.removeChild(dragStateRef.current.floatingElement)
+        if (dragStateRef.current.floatingElement) {
+            const el = document.getElementById('drag-preview-floating')
+            if (el && el.parentElement) {
+                document.body.removeChild(el)
+            }
             dragStateRef.current.floatingElement = null
         }
     }, [])
