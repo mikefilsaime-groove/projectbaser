@@ -38,7 +38,7 @@ const SidebarUserMenu = () => {
                     <div className='logo'>
                         <div className='logo-title'>
                             <FocalboardLogoIcon/>
-                            <span>{'Focalboard'}</span>
+                            <span>{'ProjectBaser'}</span>
                             <div className='versionFrame'>
                                 <div
                                     className='version'
@@ -81,14 +81,9 @@ const SidebarUserMenu = () => {
 
                         <Menu.Text
                             id='about'
-                            name={intl.formatMessage({id: 'Sidebar.about', defaultMessage: 'About Focalboard'})}
+                            name={intl.formatMessage({id: 'Sidebar.about', defaultMessage: 'About ProjectBaser'})}
                             onClick={async () => {
-                                window.open('https://www.focalboard.com?utm_source=webapp', '_blank')
-
-                                // TODO: Review if this is needed in the future, this is to fix the problem with linux webview links
-                                if (window.openInNewBrowser) {
-                                    window.openInNewBrowser('https://www.focalboard.com?utm_source=webapp')
-                                }
+                                // ProjectBaser - custom project management tool
                             }}
                         />
                     </Menu>
