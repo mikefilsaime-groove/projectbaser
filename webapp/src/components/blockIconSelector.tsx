@@ -16,7 +16,10 @@ import {
     Wifi, Bluetooth, Battery, Cpu, HardDrive, Monitor, Printer, Smartphone,
     Tablet, Watch, Play, Pause, StopCircle, SkipForward, SkipBack,
     Volume, VolumeX, Sun, Moon, Cloud, CloudRain, Wind, Thermometer,
-    Banknote, PenTool, Microscope,
+    Banknote, PenTool, Microscope, Compass, Mountain, PartyPopper, Car,
+    Inbox, Timer, Hourglass, FolderOpen, Rocket,
+    Handshake, TestTube, Building, Plug, Frame, CloudRainWind, Trees,
+    Bug, Bird, Cat, Construction,
 } from 'lucide-react'
 
 import {BlockIcons} from '../blockIcons'
@@ -41,7 +44,10 @@ const LucideIcons: Record<string, any> = {
     Wifi, Bluetooth, Battery, Cpu, HardDrive, Monitor, Printer, Smartphone,
     Tablet, Watch, Play, Pause, StopCircle, SkipForward, SkipBack,
     Volume, VolumeX, Sun, Moon, Cloud, CloudRain, Wind, Thermometer,
-    Banknote, PenTool, Microscope,
+    Banknote, PenTool, Microscope, Compass, Mountain, PartyPopper, Car,
+    Inbox, Timer, Hourglass, FolderOpen, Rocket,
+    Handshake, TestTube, Building, Plug, Frame, CloudRainWind, Trees,
+    Bug, Bird, Cat, Construction,
 }
 
 type Props = {

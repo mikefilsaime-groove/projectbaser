@@ -21,6 +21,9 @@ import {
     Hand, Move, CheckCircle2, AlertTriangle, Flame, Sparkles, CalendarDays,
     CalendarCheck, BarChart3, TrendingDown, Film, Sliders, Glasses,
     BookOpen, Laptop, Key, Trash2, Edit3, Banknote, PenTool, Microscope,
+    Compass, Mountain, PartyPopper, Car, Inbox, Timer, Hourglass,
+    FolderOpen, Rocket, Handshake, TestTube, Building, Plug, Frame, 
+    CloudRainWind, Trees, Bug, Bird, Cat, Construction,
 } from 'lucide-react'
 
 import {Board, IPropertyTemplate} from '../../blocks/board'
@@ -58,6 +61,9 @@ const LucideIcons: Record<string, any> = {
     Hand, Move, CheckCircle2, AlertTriangle, Flame, Sparkles, CalendarDays,
     CalendarCheck, BarChart3, TrendingDown, Film, Sliders, Glasses,
     BookOpen, Laptop, Key, Trash2, Edit3, Banknote, PenTool, Microscope,
+    Compass, Mountain, PartyPopper, Car, Inbox, Timer, Hourglass,
+    FolderOpen, Rocket, Handshake, TestTube, Building, Plug, Frame,
+    CloudRainWind, Trees, Bug, Bird, Cat, Construction,
 }
 
 export const OnboardingCardClassName = 'onboardingCard'

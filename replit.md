@@ -51,12 +51,15 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
 - Installed `lucide-react` package for professional icon system
 - Created `lucideIconList.ts` with 150+ curated Lucide icons
 - Built searchable `LucidePicker` component replacing emoji picker
-- Implemented emoji-to-Lucide mapping for backward compatibility
+- **Database Migration**: Replaced ALL emojis in database with Lucide icon names
+  - Migrated 82 icons across boards and cards (🎯→Target, 📝→FileText, 🔬→Microscope, etc.)
+  - Icons now stored as "Target", "Smile", "Banknote" instead of emoji characters
+  - Eliminates Unicode normalization issues (variation selectors, ZWJ sequences)
+  - Clean separation: database stores icon names, UI renders Lucide components
 - Updated all icon selectors to render Lucide SVG icons
-- Handles multi-codepoint emojis (ZWJ sequences, variation selectors)
 - Board icons, card icons, and template icons all use Lucide
-- Existing emoji data automatically converts to Lucide icons
-- **Fixed webpack tree-shaking**: Changed from `import *` to explicit named imports (100+ icons) to prevent bundler from removing Lucide library
+- **Fixed webpack tree-shaking**: Explicit named imports (150+ icons) in kanbanCard.tsx and blockIconSelector.tsx to prevent bundler removal
+- Current bundle: `main.cc8d257c.js` with all Lucide icons included
 
 **Icon System Architecture**
 - `lucideIconList.ts`: Curated icon lists and emoji mapping (source of truth for emoji→Lucide conversion)
@@ -67,7 +70,12 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
 - `iconSelector.tsx`: Updated menu to use LucidePicker
 - `blockIcons.ts`: Random Lucide icon selection
 
-**Known Limitation**: Icon imports are explicitly listed in blockIconSelector.tsx and kanbanCard.tsx to prevent webpack tree-shaking. When adding new emojis to `emojiToLucideMap`, the corresponding Lucide components must also be added to the import statements in both files. Future improvement: Create a shared icon component to centralize this logic.
+**Icon Import Management**: 
+- All Lucide icons used in database are explicitly imported in kanbanCard.tsx and blockIconSelector.tsx
+- This prevents webpack tree-shaking from removing icons from the bundle
+- Current icons: Circle, CheckSquare, Calendar, Clock, Target, TrendingUp, Microscope, PenTool, Banknote, Compass, Mountain, PartyPopper, Car, Bug, Rocket, TestTube, Handshake, Trees, and 130+ more
+- When adding new icons to database: update imports in both files + rebuild webpack
+- Future improvement: Create shared icon registry to centralize imports
 
 **Webpack Content-Hash Fix for Replit CDN**
 - Replit's front-door proxy/CDN was caching `/static/main.js` and ignoring cache-control headers and query-string hashes
