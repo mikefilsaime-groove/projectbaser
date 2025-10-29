@@ -43,10 +43,10 @@ export const defaultTheme = {
     mainFg: '9, 9, 11',
     buttonBg: '124, 58, 237',
     buttonFg: '247, 250, 252',
-    sidebarBg: '250, 245, 255',
-    sidebarFg: '88, 28, 135',
-    sidebarTextActiveBorder: '124, 58, 237',
-    sidebarWhiteLogo: 'false',
+    sidebarBg: '124, 58, 237',
+    sidebarFg: '255, 255, 255',
+    sidebarTextActiveBorder: '255, 255, 255',
+    sidebarWhiteLogo: 'true',
 
     link: '124, 58, 237',
     linkVisited: '#7c3aed',
@@ -101,10 +101,10 @@ export const lightTheme = {
     mainFg: '9, 9, 11',
     buttonBg: '124, 58, 237',
     buttonFg: '247, 250, 252',
-    sidebarBg: '250, 245, 255',
-    sidebarFg: '88, 28, 135',
-    sidebarTextActiveBorder: '124, 58, 237',
-    sidebarWhiteLogo: 'false',
+    sidebarBg: '124, 58, 237',
+    sidebarFg: '255, 255, 255',
+    sidebarTextActiveBorder: '255, 255, 255',
+    sidebarWhiteLogo: 'true',
 }
 
 export function setTheme(theme: Theme | null): Theme {
