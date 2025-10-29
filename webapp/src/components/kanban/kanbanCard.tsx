@@ -2,6 +2,26 @@
 // See LICENSE.txt for license information.
 import React, {useState, useCallback, useMemo} from 'react'
 import {useIntl} from 'react-intl'
+import {
+    Circle, CheckSquare, Calendar, Clock, FileText, Image, Link, Tag, User, Users,
+    Folder, File, Archive, Bookmark, Bell, Flag, Star, Heart, Target, TrendingUp,
+    BarChart, PieChart, Activity, Briefcase, ShoppingCart, DollarSign, CreditCard,
+    MapPin, Globe, Mail, Phone, MessageSquare, Send, Paperclip, Download, Upload,
+    Settings, Wrench, Search, Filter, Eye, Lock, Unlock, Shield, AlertCircle,
+    CheckCircle, XCircle, Info, HelpCircle, Home, Menu, ChevronRight, ChevronDown,
+    Plus, Minus, X, Check, Edit, Trash, Copy, Clipboard, Share, ExternalLink,
+    Zap, Code, Terminal, Box, Package, Layers, Grid, List, LayoutGrid, Columns,
+    AlignLeft, AlignCenter, AlignRight, AlignJustify, Bold, Italic, Underline,
+    Hash, AtSign, Percent, Smile, ThumbsUp, Award, Gift, Trophy, Lightbulb,
+    Book, GraduationCap, Palette, Music, Video, Camera, Mic, Speaker,
+    Wifi, Bluetooth, Battery, Cpu, HardDrive, Monitor, Printer, Smartphone,
+    Tablet, Watch, Play, Pause, StopCircle, SkipForward, SkipBack,
+    Volume, VolumeX, Sun, Moon, Cloud, CloudRain, Wind, Thermometer,
+    // Additional icons from emoji mapping
+    Hand, Move, CheckCircle2, AlertTriangle, Flame, Sparkles, CalendarDays,
+    CalendarCheck, BarChart3, TrendingDown, Film, Sliders, Glasses,
+    BookOpen, Laptop, Key, Trash2, Edit3,
+} from 'lucide-react'
 
 import {Board, IPropertyTemplate} from '../../blocks/board'
 import {Card} from '../../blocks/card'
@@ -17,6 +37,28 @@ import './kanbanCard.scss'
 import CardBadges from '../cardBadges'
 import CardActionsMenu from '../cardActionsMenu/cardActionsMenu'
 import CardActionsMenuIcon from '../cardActionsMenu/cardActionsMenuIcon'
+import {convertEmojiToLucideIcon} from '../../lucideIconList'
+
+const LucideIcons: Record<string, any> = {
+    Circle, CheckSquare, Calendar, Clock, FileText, Image, Link, Tag, User, Users,
+    Folder, File, Archive, Bookmark, Bell, Flag, Star, Heart, Target, TrendingUp,
+    BarChart, PieChart, Activity, Briefcase, ShoppingCart, DollarSign, CreditCard,
+    MapPin, Globe, Mail, Phone, MessageSquare, Send, Paperclip, Download, Upload,
+    Settings, Wrench, Search, Filter, Eye, Lock, Unlock, Shield, AlertCircle,
+    CheckCircle, XCircle, Info, HelpCircle, Home, Menu, ChevronRight, ChevronDown,
+    Plus, Minus, X, Check, Edit, Trash, Copy, Clipboard, Share, ExternalLink,
+    Zap, Code, Terminal, Box, Package, Layers, Grid, List, LayoutGrid, Columns,
+    AlignLeft, AlignCenter, AlignRight, AlignJustify, Bold, Italic, Underline,
+    Hash, AtSign, Percent, Smile, ThumbsUp, Award, Gift, Trophy, Lightbulb,
+    Book, GraduationCap, Palette, Music, Video, Camera, Mic, Speaker,
+    Wifi, Bluetooth, Battery, Cpu, HardDrive, Monitor, Printer, Smartphone,
+    Tablet, Watch, Play, Pause, StopCircle, SkipForward, SkipBack,
+    Volume, VolumeX, Sun, Moon, Cloud, CloudRain, Wind, Thermometer,
+    // Additional icons from emoji mapping
+    Hand, Move, CheckCircle2, AlertTriangle, Flame, Sparkles, CalendarDays,
+    CalendarCheck, BarChart3, TrendingDown, Film, Sliders, Glasses,
+    BookOpen, Laptop, Key, Trash2, Edit3,
+}
 
 export const OnboardingCardClassName = 'onboardingCard'
 
@@ -122,7 +164,19 @@ const KanbanCard = (props: Props) => {
                 }
 
                 <div className='octo-icontitle'>
-                    { card.fields.icon ? <div className='octo-icon'>{card.fields.icon}</div> : undefined }
+                    { card.fields.icon ? (
+                        <div className='octo-icon lucide-icon'>
+                            {(() => {
+                                let iconName = card.fields.icon
+                                const convertedIcon = convertEmojiToLucideIcon(iconName)
+                                if (convertedIcon !== 'Circle' || iconName.length <= 2) {
+                                    iconName = convertedIcon
+                                }
+                                const IconComponent = LucideIcons[iconName]
+                                return IconComponent ? <IconComponent size={16} /> : <span>{card.fields.icon}</span>
+                            })()}
+                        </div>
+                    ) : undefined }
                     <div
                         key='__title'
                         className='octo-titletext'

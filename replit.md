@@ -59,12 +59,15 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
 - **Fixed webpack tree-shaking**: Changed from `import *` to explicit named imports (100+ icons) to prevent bundler from removing Lucide library
 
 **Icon System Architecture**
-- `lucideIconList.ts`: Curated icon lists and emoji mapping
+- `lucideIconList.ts`: Curated icon lists and emoji mapping (source of truth for emoji→Lucide conversion)
 - `lucidePicker.tsx/scss`: Modern searchable icon picker (8x grid, 352px wide)
-- `blockIconSelector.tsx`: Renders Lucide icons for cards (explicit imports to force bundling)
+- `blockIconSelector.tsx`: Renders Lucide icons for cards in detail view (explicit imports to force bundling)
+- `kanbanCard.tsx`: Renders Lucide icons for cards in kanban board (explicit imports to force bundling)
 - `boardIconSelector.tsx`: Renders Lucide icons for boards
 - `iconSelector.tsx`: Updated menu to use LucidePicker
 - `blockIcons.ts`: Random Lucide icon selection
+
+**Known Limitation**: Icon imports are explicitly listed in blockIconSelector.tsx and kanbanCard.tsx to prevent webpack tree-shaking. When adding new emojis to `emojiToLucideMap`, the corresponding Lucide components must also be added to the import statements in both files. Future improvement: Create a shared icon component to centralize this logic.
 
 ### Rebranding to ProjectBaser
 1. Implemented Lucide "Layers" icon (inline SVG) consistently across all pages:
