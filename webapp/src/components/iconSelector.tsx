@@ -4,9 +4,9 @@ import React from 'react'
 import {useIntl} from 'react-intl'
 
 import RandomIcon from '../widgets/icons/random'
-import EmojiPicker from '../widgets/emojiPicker'
+import LucidePicker from '../widgets/lucidePicker'
 import DeleteIcon from '../widgets/icons/delete'
-import EmojiIcon from '../widgets/icons/emoji'
+import {Sparkles} from 'lucide-react'
 import Menu from '../widgets/menu'
 import MenuWrapper from '../widgets/menuWrapper'
 import './iconSelector.scss'
@@ -37,10 +37,10 @@ const IconSelector = React.memo((props: Props) => {
                         />
                         <Menu.SubMenu
                             id='pick'
-                            icon={<EmojiIcon/>}
+                            icon={<Sparkles size={16}/>}
                             name={intl.formatMessage({id: 'ViewTitle.pick-icon', defaultMessage: 'Pick icon'})}
                         >
-                            <EmojiPicker onSelect={props.onSelectEmoji}/>
+                            <LucidePicker onSelect={props.onSelectEmoji}/>
                         </Menu.SubMenu>
                         <Menu.Text
                             id='remove'

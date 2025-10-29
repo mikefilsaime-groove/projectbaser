@@ -1,10 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import React, {useCallback} from 'react'
+import * as LucideIcons from 'lucide-react'
 
 import {BlockIcons} from '../blockIcons'
 import {Card} from '../blocks/card'
 import mutator from '../mutator'
+import {convertEmojiToLucideIcon} from '../lucideIconList'
 
 import IconSelector from './iconSelector'
 
@@ -17,8 +19,8 @@ type Props = {
 const BlockIconSelector = (props: Props) => {
     const {block, size} = props
 
-    const onSelectEmoji = useCallback((emoji: string) => {
-        mutator.changeBlockIcon(block.boardId, block.id, block.fields.icon, emoji)
+    const onSelectEmoji = useCallback((iconName: string) => {
+        mutator.changeBlockIcon(block.boardId, block.id, block.fields.icon, iconName)
         document.body.click()
     }, [block.id, block.fields.icon])
     const onAddRandomIcon = useCallback(() => mutator.changeBlockIcon(block.boardId, block.id, block.fields.icon, BlockIcons.shared.randomIcon()), [block.id, block.fields.icon])
@@ -28,11 +30,28 @@ const BlockIconSelector = (props: Props) => {
         return null
     }
 
-    let className = `octo-icon size-${size || 'm'}`
+    let className = `octo-icon lucide-icon size-${size || 'm'}`
     if (props.readonly) {
         className += ' readonly'
     }
-    const iconElement = <div className={className}><span>{block.fields.icon}</span></div>
+
+    // Try to convert emoji to Lucide icon, or use icon name directly
+    let iconName = block.fields.icon
+    if (iconName.length <= 2) {
+        // Likely an emoji, convert it
+        iconName = convertEmojiToLucideIcon(iconName)
+    }
+
+    // Get the Lucide icon component
+    const IconComponent = (LucideIcons as any)[iconName]
+    const sizeMap = {s: 16, m: 20, l: 24}
+    const iconSize = sizeMap[size || 'm']
+
+    const iconElement = (
+        <div className={className}>
+            {IconComponent ? <IconComponent size={iconSize} /> : <span>{block.fields.icon}</span>}
+        </div>
+    )
 
     return (
         <IconSelector
