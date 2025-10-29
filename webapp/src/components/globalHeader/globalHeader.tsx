@@ -24,7 +24,6 @@ type HeaderItemProps = {
 
 const HeaderItems = (props: HeaderItemProps) => {
     const language = useAppSelector<string>(getLanguage)
-    const helpUrl = 'https://www.focalboard.com/fwlink/doc-boards.html?v=' + Constants.versionString
 
     return (
         <IntlProvider
@@ -33,14 +32,6 @@ const HeaderItems = (props: HeaderItemProps) => {
         >
             <div className='GlobalHeaderComponent'>
                 <span className='spacer'/>
-                <a
-                    href={helpUrl}
-                    target='_blank'
-                    rel='noreferrer'
-                    className='GlobalHeaderComponent__button help-button'
-                >
-                    <HelpIcon/>
-                </a>
                 <GlobalHeaderSettingsMenu history={props.history}/>
             </div>
         </IntlProvider>

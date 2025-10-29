@@ -600,7 +600,7 @@ class Utils {
     // for shared boards as a way to check if we're accessing the
     // legacy routes inside the plugin
     static isFocalboardLegacy(): boolean {
-        return window.location.pathname.includes('/plugins/focalboard')
+        return window.location.pathname.includes('/plugins/projectbaser')
     }
 
     static fixWSData(message: WSMessage): [WSMessagePayloads, ChangeHandlerType] {
