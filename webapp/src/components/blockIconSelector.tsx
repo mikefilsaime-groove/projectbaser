@@ -37,9 +37,10 @@ const BlockIconSelector = (props: Props) => {
 
     // Try to convert emoji to Lucide icon, or use icon name directly
     let iconName = block.fields.icon
-    if (iconName.length <= 2) {
-        // Likely an emoji, convert it
-        iconName = convertEmojiToLucideIcon(iconName)
+    const convertedIcon = convertEmojiToLucideIcon(iconName)
+    if (convertedIcon !== 'Circle' || iconName.length <= 2) {
+        // Either found in mapping or likely an emoji (short string)
+        iconName = convertedIcon
     }
 
     // Get the Lucide icon component
