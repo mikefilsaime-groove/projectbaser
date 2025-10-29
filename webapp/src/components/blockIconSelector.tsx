@@ -1,7 +1,22 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import React, {useCallback} from 'react'
-import * as LucideIcons from 'lucide-react'
+import {
+    Circle, CheckSquare, Calendar, Clock, FileText, Image, Link, Tag, User, Users,
+    Folder, File, Archive, Bookmark, Bell, Flag, Star, Heart, Target, TrendingUp,
+    BarChart, PieChart, Activity, Briefcase, ShoppingCart, DollarSign, CreditCard,
+    MapPin, Globe, Mail, Phone, MessageSquare, Send, Paperclip, Download, Upload,
+    Settings, Wrench, Search, Filter, Eye, Lock, Unlock, Shield, AlertCircle,
+    CheckCircle, XCircle, Info, HelpCircle, Home, Menu, ChevronRight, ChevronDown,
+    Plus, Minus, X, Check, Edit, Trash, Copy, Clipboard, Share, ExternalLink,
+    Zap, Code, Terminal, Box, Package, Layers, Grid, List, LayoutGrid, Columns,
+    AlignLeft, AlignCenter, AlignRight, AlignJustify, Bold, Italic, Underline,
+    Hash, AtSign, Percent, Smile, ThumbsUp, Award, Gift, Trophy, Lightbulb,
+    Book, GraduationCap, Palette, Music, Video, Camera, Mic, Speaker,
+    Wifi, Bluetooth, Battery, Cpu, HardDrive, Monitor, Printer, Smartphone,
+    Tablet, Watch, Play, Pause, StopCircle, SkipForward, SkipBack,
+    Volume, VolumeX, Sun, Moon, Cloud, CloudRain, Wind, Thermometer,
+} from 'lucide-react'
 
 import {BlockIcons} from '../blockIcons'
 import {Card} from '../blocks/card'
@@ -9,6 +24,23 @@ import mutator from '../mutator'
 import {convertEmojiToLucideIcon} from '../lucideIconList'
 
 import IconSelector from './iconSelector'
+
+const LucideIcons: Record<string, any> = {
+    Circle, CheckSquare, Calendar, Clock, FileText, Image, Link, Tag, User, Users,
+    Folder, File, Archive, Bookmark, Bell, Flag, Star, Heart, Target, TrendingUp,
+    BarChart, PieChart, Activity, Briefcase, ShoppingCart, DollarSign, CreditCard,
+    MapPin, Globe, Mail, Phone, MessageSquare, Send, Paperclip, Download, Upload,
+    Settings, Wrench, Search, Filter, Eye, Lock, Unlock, Shield, AlertCircle,
+    CheckCircle, XCircle, Info, HelpCircle, Home, Menu, ChevronRight, ChevronDown,
+    Plus, Minus, X, Check, Edit, Trash, Copy, Clipboard, Share, ExternalLink,
+    Zap, Code, Terminal, Box, Package, Layers, Grid, List, LayoutGrid, Columns,
+    AlignLeft, AlignCenter, AlignRight, AlignJustify, Bold, Italic, Underline,
+    Hash, AtSign, Percent, Smile, ThumbsUp, Award, Gift, Trophy, Lightbulb,
+    Book, GraduationCap, Palette, Music, Video, Camera, Mic, Speaker,
+    Wifi, Bluetooth, Battery, Cpu, HardDrive, Monitor, Printer, Smartphone,
+    Tablet, Watch, Play, Pause, StopCircle, SkipForward, SkipBack,
+    Volume, VolumeX, Sun, Moon, Cloud, CloudRain, Wind, Thermometer,
+}
 
 type Props = {
     block: Card
