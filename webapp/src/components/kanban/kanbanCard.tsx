@@ -167,13 +167,9 @@ const KanbanCard = (props: Props) => {
                     { card.fields.icon ? (
                         <div className='octo-icon lucide-icon'>
                             {(() => {
-                                let iconName = card.fields.icon
-                                const convertedIcon = convertEmojiToLucideIcon(iconName)
-                                if (convertedIcon !== 'Circle' || iconName.length <= 2) {
-                                    iconName = convertedIcon
-                                }
+                                const iconName = convertEmojiToLucideIcon(card.fields.icon)
                                 const IconComponent = LucideIcons[iconName]
-                                return IconComponent ? <IconComponent size={16} /> : <span>{card.fields.icon}</span>
+                                return IconComponent ? <IconComponent size={16} /> : <LucideIcons.Circle size={16} />
                             })()}
                         </div>
                     ) : undefined }

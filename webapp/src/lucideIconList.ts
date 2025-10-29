@@ -142,10 +142,16 @@ const emojiToLucideMap: {[key: string]: string} = {
 }
 
 const normalizeEmojiKey = (emoji: string): string => {
-    // Strip variation selectors, zero-width joiners, and surrounding whitespace
-    return Array.from(emoji.trim())
-        .filter((char) => char !== '\uFE0F' && char !== '\u200D')
-        .join('')
+    // Strip variation selectors (FE0F), zero-width joiners (200D), 
+    // and other invisible Unicode characters that don't affect the emoji appearance
+    const normalized = emoji.trim()
+        .replace(/\uFE0F/g, '')  // Variation Selector-16 (emoji presentation)
+        .replace(/\u200D/g, '')  // Zero Width Joiner
+        .replace(/\uFE0E/g, '')  // Variation Selector-15 (text presentation)
+        .replace(/[\u200B-\u200F]/g, '')  // Other zero-width characters
+        .trim()
+    
+    return normalized
 }
 
 function convertEmojiToLucideIcon(emoji: string): string {
@@ -153,17 +159,24 @@ function convertEmojiToLucideIcon(emoji: string): string {
         return 'Circle'
     }
 
+    // Try direct match first
     const directMatch = emojiToLucideMap[emoji]
     if (directMatch) {
         return directMatch
     }
 
+    // Try normalized version
     const normalizedEmoji = normalizeEmojiKey(emoji)
     if (normalizedEmoji && normalizedEmoji !== emoji) {
         const normalizedMatch = emojiToLucideMap[normalizedEmoji]
         if (normalizedMatch) {
             return normalizedMatch
         }
+    }
+
+    // Debug: log unmapped emojis in development
+    if (typeof window !== 'undefined') {
+        console.log('Unmapped emoji:', emoji, 'normalized:', normalizedEmoji, 'codes:', Array.from(emoji).map(c => c.codePointAt(0)?.toString(16)).join(' '))
     }
 
     return 'Circle'

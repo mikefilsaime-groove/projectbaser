@@ -35,22 +35,15 @@ const BoardIconSelector = React.memo((props: Props) => {
         className += ' readonly'
     }
 
-    // Try to convert emoji to Lucide icon, or use icon name directly
-    let iconName = board.icon
-    const convertedIcon = convertEmojiToLucideIcon(iconName)
-    if (convertedIcon !== 'Circle' || iconName.length <= 2) {
-        // Either found in mapping or likely an emoji (short string)
-        iconName = convertedIcon
-    }
-
-    // Get the Lucide icon component
+    // Convert emoji to Lucide icon
+    const iconName = convertEmojiToLucideIcon(board.icon)
     const IconComponent = (LucideIcons as any)[iconName]
     const sizeMap = {s: 16, m: 20, l: 24}
     const iconSize = sizeMap[size || 'm']
 
     const iconElement = (
         <div className={className}>
-            {IconComponent ? <IconComponent size={iconSize} /> : <span>{board.icon}</span>}
+            {IconComponent ? <IconComponent size={iconSize} /> : <LucideIcons.Circle size={iconSize} />}
         </div>
     )
 
