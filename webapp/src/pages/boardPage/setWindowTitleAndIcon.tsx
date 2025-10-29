@@ -12,7 +12,7 @@ const SetWindowTitleAndIcon = (): null => {
     const activeView = useAppSelector(getCurrentView)
 
     useEffect(() => {
-        Utils.setFavicon(board?.icon)
+        Utils.setFavicon()
     }, [board?.icon])
 
     useEffect(() => {

@@ -423,17 +423,21 @@ class Utils {
 
     // favicon
 
-    static setFavicon(icon?: string): void {
-        if (!icon) {
-            document.querySelector("link[rel*='icon']")?.remove()
+    static setFavicon(): void {
+        const head = document.getElementsByTagName('head')[0]
+        if (!head) {
             return
         }
+
+        // Replace any existing favicons with the bundled Lucide SVG asset
+        document.querySelectorAll("link[rel*='icon']").forEach((node) => node.remove())
+
         const link = document.createElement('link') as HTMLLinkElement
-        link.type = 'image/x-icon'
-        link.rel = 'shortcut icon'
-        link.href = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${icon}</text></svg>`
-        document.querySelectorAll("link[rel*='icon']").forEach((n) => n.remove())
-        document.getElementsByTagName('head')[0].appendChild(link)
+        link.rel = 'icon'
+        link.type = 'image/svg+xml'
+        link.href = '/static/favicon.svg?v=3'
+
+        head.appendChild(link)
     }
 
     // URL

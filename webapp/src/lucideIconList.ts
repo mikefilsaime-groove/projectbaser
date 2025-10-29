@@ -141,8 +141,32 @@ const emojiToLucideMap: {[key: string]: string} = {
     '⚙️': 'Settings',
 }
 
+const normalizeEmojiKey = (emoji: string): string => {
+    // Strip variation selectors, zero-width joiners, and surrounding whitespace
+    return Array.from(emoji.trim())
+        .filter((char) => char !== '\uFE0F' && char !== '\u200D')
+        .join('')
+}
+
 function convertEmojiToLucideIcon(emoji: string): string {
-    return emojiToLucideMap[emoji] || 'Circle'
+    if (!emoji) {
+        return 'Circle'
+    }
+
+    const directMatch = emojiToLucideMap[emoji]
+    if (directMatch) {
+        return directMatch
+    }
+
+    const normalizedEmoji = normalizeEmojiKey(emoji)
+    if (normalizedEmoji && normalizedEmoji !== emoji) {
+        const normalizedMatch = emojiToLucideMap[normalizedEmoji]
+        if (normalizedMatch) {
+            return normalizedMatch
+        }
+    }
+
+    return 'Circle'
 }
 
 export {lucideIconList, randomLucideIconList, emojiToLucideMap, convertEmojiToLucideIcon}
