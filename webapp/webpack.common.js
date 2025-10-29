@@ -92,7 +92,7 @@ function makeCommonConfig() {
             }),
             new HtmlWebpackPlugin({
                 inject: true,
-                title: 'Focalboard',
+                title: 'ProjectBaser',
                 chunks: ['main'],
                 template: 'html-templates/page.ejs',
                 filename: 'index.html',
