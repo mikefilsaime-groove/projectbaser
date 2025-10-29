@@ -38,14 +38,16 @@ ProjectBaser is a self-hosted project management tool for technical teams. Built
 ### UI Modernization - ShadCN-Inspired Design
 Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthetic:
 
-**Global CSS Variables** (`webapp/src/styles/`)
-- Modern color palette with darker contrast (rgb(9, 9, 11) for text)
-- Dark modern sidebar (rgb(24, 24, 27)) 
+**ShadCN Violet Theme** (`webapp/src/theme.ts`)
+- Light, clean violet theme inspired by ShadCN design system
+- Violet primary colors (rgb(124, 58, 237)) for buttons, links, and accents
+- Light violet sidebar (rgb(250, 245, 255)) with darker purple text (rgb(88, 28, 135))
+- White main background with high-contrast dark text (rgb(9, 9, 11))
 - Soft elevation shadows (ShadCN-inspired layered shadows)
 - Larger border radius (8px default, 12px modals, 10px cards)
 - Consistent RGB triplet format for all color variables
-- Additional modern utility colors (border, muted backgrounds, accent)
-- CSS backup stored in `/backup-css/` for easy rollback
+- Style backups stored in `/backup-css/` and `/backup-css-current/` for easy rollback
+- Current bundle: `main.1e831a5c.js` with violet theme
 
 **Complete Emoji Replacement with Lucide Icons**
 - Installed `lucide-react` package for professional icon system
@@ -66,7 +68,7 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
   - Status: "Completed"→CheckCircle, "In Progress"→Play, "Blocked"→XCircle
   - Types: "Bug"→Bug, "Epic"→Mountain, "Feature"→Construction, "Task"→CheckSquare
   - 20+ intelligent pattern matches for automatic icon selection
-- Current bundle: `main.5d92b26a.js` with all Lucide icons, property badge icons, and enhanced drag animations
+- Webpack uses content-hashed filenames to bypass Replit CDN caching
 
 **Enhanced Drag-and-Drop Animations**
 Complete overhaul of kanban card drag UX for professional, intuitive feel:

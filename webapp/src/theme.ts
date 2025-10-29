@@ -43,8 +43,8 @@ export const defaultTheme = {
     mainFg: '9, 9, 11',
     buttonBg: '124, 58, 237',
     buttonFg: '247, 250, 252',
-    sidebarBg: '255, 255, 255',
-    sidebarFg: '9, 9, 11',
+    sidebarBg: '250, 245, 255',
+    sidebarFg: '88, 28, 135',
     sidebarTextActiveBorder: '124, 58, 237',
     sidebarWhiteLogo: 'false',
 
@@ -101,8 +101,8 @@ export const lightTheme = {
     mainFg: '9, 9, 11',
     buttonBg: '124, 58, 237',
     buttonFg: '247, 250, 252',
-    sidebarBg: '255, 255, 255',
-    sidebarFg: '9, 9, 11',
+    sidebarBg: '250, 245, 255',
+    sidebarFg: '88, 28, 135',
     sidebarTextActiveBorder: '124, 58, 237',
     sidebarWhiteLogo: 'false',
 }
