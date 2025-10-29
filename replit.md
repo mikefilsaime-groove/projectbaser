@@ -69,6 +69,13 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
 
 **Known Limitation**: Icon imports are explicitly listed in blockIconSelector.tsx and kanbanCard.tsx to prevent webpack tree-shaking. When adding new emojis to `emojiToLucideMap`, the corresponding Lucide components must also be added to the import statements in both files. Future improvement: Create a shared icon component to centralize this logic.
 
+**Webpack Content-Hash Fix for Replit CDN**
+- Replit's front-door proxy/CDN was caching `/static/main.js` and ignoring cache-control headers and query-string hashes
+- Solution: Changed webpack output to use content-hashed filenames: `[name].[contenthash:8].js`
+- Now generates files like `main.eeee545e.js` instead of `main.js?hash`
+- Forces Replit's CDN to fetch new files when bundle content changes
+- Disabled HtmlWebpackPlugin's `hash: true` option (redundant with contenthash in filename)
+
 ### Rebranding to ProjectBaser
 1. Implemented Lucide "Layers" icon (inline SVG) consistently across all pages:
    - Landing page navigation
