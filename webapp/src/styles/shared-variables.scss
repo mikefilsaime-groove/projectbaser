@@ -1,18 +1,42 @@
 :root {
-    // Modern ShadCN-inspired color palette
-    --center-channel-bg-rgb: 255, 255, 255;
-    --center-channel-color-rgb: 9, 9, 11;  // Darker, better contrast
-    --sidebar-bg-rgb: 24, 24, 27;  // Modern dark sidebar
-    --sidebar-text-rgb: 250, 250, 250;
-    --button-color-rgb: 255, 255, 255;
-    --button-bg-rgb: 24, 24, 27;  // Modern dark buttons
-    --button-danger-color-rgb: 255, 255, 255;
-    --button-danger-bg-rgb: 239, 68, 68;  // Modern red
-    --link-color-rgb: 59, 130, 246;  // Modern blue
-    --error-text-rgb: 239, 68, 68;  // Modern red
+    // ShadCN Violet Theme - Light, modern design
     
-    // Additional modern colors
-    --border-color: 228, 228, 231;  // Subtle borders
-    --muted-bg: 244, 244, 245;  // Muted backgrounds
-    --accent-rgb: 99, 102, 241;  // Modern accent color
+    // Backgrounds
+    --center-channel-bg-rgb: 255, 255, 255;  // Pure white background
+    --sidebar-bg-rgb: 255, 255, 255;  // Light sidebar (was dark)
+    --muted-bg: 240, 242, 245;  // Muted/secondary backgrounds
+    --card-bg-rgb: 255, 255, 255;  // Card backgrounds
+    
+    // Text Colors
+    --center-channel-color-rgb: 9, 9, 11;  // Dark text on light bg
+    --sidebar-text-rgb: 9, 9, 11;  // Dark text in sidebar (was light)
+    --muted-color-rgb: 113, 119, 128;  // Muted text
+    --secondary-text-rgb: 17, 24, 39;  // Secondary text
+    
+    // Primary Colors (Violet/Purple)
+    --primary-rgb: 124, 58, 237;  // Main violet primary
+    --primary-foreground-rgb: 247, 250, 252;  // Text on primary (almost white)
+    --button-bg-rgb: 124, 58, 237;  // Violet buttons
+    --button-color-rgb: 247, 250, 252;  // White text on buttons
+    
+    // Secondary Colors
+    --secondary-bg-rgb: 240, 242, 245;  // Light gray backgrounds
+    --secondary-foreground-rgb: 17, 24, 39;  // Dark text on secondary
+    
+    // Accent Colors
+    --accent-rgb: 240, 242, 245;  // Same as secondary
+    --accent-foreground-rgb: 17, 24, 39;  // Dark text on accent
+    
+    // Borders & Inputs
+    --border-color: 228, 230, 235;  // Soft borders
+    --input-border-rgb: 228, 230, 235;  // Input borders
+    --ring-rgb: 124, 58, 237;  // Focus ring (violet)
+    
+    // Destructive/Error
+    --button-danger-bg-rgb: 239, 68, 68;  // Red for danger
+    --button-danger-color-rgb: 247, 250, 252;  // White text on danger
+    --error-text-rgb: 239, 68, 68;  // Red error text
+    
+    // Links
+    --link-color-rgb: 124, 58, 237;  // Violet links (changed from blue)
 }
