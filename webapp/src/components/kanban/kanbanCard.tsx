@@ -94,9 +94,8 @@ const KanbanCard = (props: Props) => {
     // Track drag direction for dynamic tilt
     const dragStateRef = React.useRef<{
         lastX: number
-        rotation: number
         floatingElement: HTMLElement | null
-    }>({ lastX: 0, rotation: 0, floatingElement: null })
+    }>({ lastX: 0, floatingElement: null })
 
     // Create custom floating drag preview with directional tilt
     const handleDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -104,65 +103,66 @@ const KanbanCard = (props: Props) => {
         
         // Track initial position
         dragStateRef.current.lastX = e.clientX
-        dragStateRef.current.rotation = 0
-        
-        // Create a completely transparent 1x1 image to hide default drag ghost
-        const canvas = document.createElement('canvas')
-        canvas.width = 1
-        canvas.height = 1
-        const ctx = canvas.getContext('2d')
-        if (ctx) {
-            ctx.clearRect(0, 0, 1, 1)
-        }
-        e.dataTransfer.setDragImage(canvas, 0, 0)
         
         // Create floating element that follows cursor
         const floatingCard = cardRef.current.cloneNode(true) as HTMLElement
         floatingCard.id = 'drag-preview-floating'
+        floatingCard.className = floatingCard.className + ' floating-drag-preview'
         floatingCard.style.cssText = `
             position: fixed;
             left: ${e.clientX}px;
             top: ${e.clientY}px;
-            transform: translate(-50%, -50%) rotate(0deg) scale(1.05);
+            transform: translate(-50%, -50%) scale(1.05);
             box-shadow: rgba(0, 0, 0, 0.25) 0 16px 32px, rgba(0, 0, 0, 0.15) 0 8px 16px;
             border-radius: 8px;
             opacity: 0.9;
             pointer-events: none;
             z-index: 10000;
-            transition: transform 100ms ease-out;
             width: ${cardRef.current.offsetWidth}px;
         `
         
         document.body.appendChild(floatingCard)
         dragStateRef.current.floatingElement = floatingCard
+        
+        // Hide the default drag ghost completely by setting it far off-screen
+        if (e.dataTransfer) {
+            e.dataTransfer.effectAllowed = 'move'
+            // Use the card itself as drag image but offset it way off screen
+            e.dataTransfer.setDragImage(cardRef.current, -9999, -9999)
+        }
     }, [])
 
     // Update position and tilt based on drag direction
     const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-        if (!dragStateRef.current.floatingElement || e.clientX === 0 || e.clientY === 0) return
+        const floatingEl = dragStateRef.current.floatingElement
+        if (!floatingEl) return
+        
+        // Skip if coordinates are 0 (happens at the end of drag)
+        if (e.clientX === 0 && e.clientY === 0) return
         
         const deltaX = e.clientX - dragStateRef.current.lastX
-        dragStateRef.current.lastX = e.clientX
         
-        // Determine rotation based on horizontal movement
-        dragStateRef.current.rotation = deltaX > 0 ? 5 : deltaX < 0 ? -5 : 0
-        
-        // Update position and rotation
-        dragStateRef.current.floatingElement.style.left = `${e.clientX}px`
-        dragStateRef.current.floatingElement.style.top = `${e.clientY}px`
-        dragStateRef.current.floatingElement.style.transform = 
-            `translate(-50%, -50%) rotate(${dragStateRef.current.rotation}deg) scale(1.05)`
+        // Only update if we have valid movement
+        if (Math.abs(deltaX) > 0) {
+            dragStateRef.current.lastX = e.clientX
+            
+            // Determine rotation based on horizontal movement direction
+            const rotation = deltaX > 0 ? 5 : -5
+            
+            // Update position and rotation
+            floatingEl.style.left = `${e.clientX}px`
+            floatingEl.style.top = `${e.clientY}px`
+            floatingEl.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1.05)`
+        }
     }, [])
 
     // Clean up on drag end
     const handleDragEnd = useCallback(() => {
-        if (dragStateRef.current.floatingElement) {
-            const el = document.getElementById('drag-preview-floating')
-            if (el && el.parentElement) {
-                document.body.removeChild(el)
-            }
-            dragStateRef.current.floatingElement = null
+        const el = document.getElementById('drag-preview-floating')
+        if (el && el.parentElement) {
+            document.body.removeChild(el)
         }
+        dragStateRef.current.floatingElement = null
     }, [])
 
     const [showConfirmationDialogBox, setShowConfirmationDialogBox] = useState<boolean>(false)
