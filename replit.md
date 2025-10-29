@@ -35,24 +35,23 @@ ProjectBaser is a self-hosted project management tool for technical teams. Built
 
 ## Recent Changes (October 29, 2025)
 ### Rebranding to ProjectBaser
-1. Generated custom ProjectBaser icon (geometric, professional design)
-2. Implemented consistent icon across all pages:
+1. Implemented Lucide "Layers" icon (inline SVG) consistently across all pages:
    - Landing page navigation
    - Login page header
    - Registration page header
-   - App sidebar
-   - Favicon
-3. Removed version number display (v8.0.0) from sidebar for cleaner look
-4. Replaced ALL emojis with professional Lucide-style SVG icons:
-   - Section headers on landing page
-   - Template cards
-   - Feature highlights
-5. Created stunning landing page based on focalboard.com content
-6. Re-skinned login and registration pages with modern gradient design
-7. Updated all UI references from "Focalboard" to "ProjectBaser"
-8. Removed all open source references and pricing information
-9. Downloaded and integrated professional stock images
-10. Modified Go server routing to serve landing page at root /
+   - App sidebar (FocalboardLogoIcon component)
+   - Favicon (SVG version)
+2. Removed version number display (v8.0.0) from sidebar for cleaner look
+3. Replaced ALL emojis with professional Lucide-style SVG icons:
+   - Section headers on landing page (Layers, Grid, Users icons)
+   - Template cards (Check, Calendar, Clock icons, etc.)
+   - Feature highlights (Grid, File, Folder, Lock icons, etc.)
+4. Created stunning landing page based on focalboard.com content
+5. Re-skinned login and registration pages with modern gradient design
+6. Updated all UI references from "Focalboard" to "ProjectBaser"
+7. Removed all open source references and pricing information
+8. Downloaded and integrated professional stock images
+9. Modified Go server routing to serve landing page at root /
 
 ### Previous Setup
 1. Installed Node.js 20 and Go 1.21
@@ -73,11 +72,9 @@ ProjectBaser is a self-hosted project management tool for technical teams. Built
 │   │   └── pages/        # Login/register pages (re-skinned)
 │   ├── static/landing/   # Landing page assets
 │   │   ├── index.html    # Marketing landing page with Lucide icons
-│   │   ├── icon.png      # ProjectBaser icon
 │   │   └── *.jpg         # Stock images
 │   ├── static/           # Static assets
-│   │   ├── app-icon.png  # App icon (used in sidebar)
-│   │   └── favicon.png   # Browser favicon
+│   │   └── favicon.svg   # Browser favicon (Lucide Layers icon)
 │   └── pack/              # Production build output
 ├── config.json            # Server configuration
 ├── focalboard.db          # SQLite database (auto-created)
@@ -86,12 +83,13 @@ ProjectBaser is a self-hosted project management tool for technical teams. Built
 
 ## Design & Branding
 - **Color Scheme**: Blue/purple gradient (matching Brand Baser style)
-- **Icon**: Custom geometric icon used consistently across all pages
+- **Logo**: Lucide "Layers" icon (inline SVG) used consistently everywhere
 - **Icons Style**: Professional Lucide-style SVG icons (NO emojis)
 - **Typography**: Modern sans-serif fonts
 - **Landing Page**: Single-page design with hero, features, templates, and CTA sections
 - **Login/Register**: Matching gradient background with clean white card design
 - **Sidebar**: Clean design without version number
+- **Favicon**: SVG version of Layers icon
 
 ## Configuration Details
 - **Server Port**: 5000 (frontend and backend integrated)
