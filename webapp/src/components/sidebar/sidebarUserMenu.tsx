@@ -39,14 +39,6 @@ const SidebarUserMenu = () => {
                         <div className='logo-title'>
                             <FocalboardLogoIcon/>
                             <span>{'ProjectBaser'}</span>
-                            <div className='versionFrame'>
-                                <div
-                                    className='version'
-                                    title={`v${Constants.versionString}`}
-                                >
-                                    {`v${Constants.versionString}`}
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <Menu>

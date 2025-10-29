@@ -37,10 +37,6 @@ externalPort = 80
 localPort = 9092
 externalPort = 3000
 
-[[ports]]
-localPort = 36389
-externalPort = 3001
-
 [deployment]
 deploymentTarget = "vm"
 run = ["./bin/focalboard-server"]
