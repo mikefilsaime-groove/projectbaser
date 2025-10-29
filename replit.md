@@ -66,7 +66,20 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
   - Status: "Completed"→CheckCircle, "In Progress"→Play, "Blocked"→XCircle
   - Types: "Bug"→Bug, "Epic"→Mountain, "Feature"→Construction, "Task"→CheckSquare
   - 20+ intelligent pattern matches for automatic icon selection
-- Current bundle: `main.3938eecf.js` with all Lucide icons and property badge icons included
+- Current bundle: `main.d1fc4447.js` with all Lucide icons, property badge icons, and enhanced drag animations
+
+**Enhanced Drag-and-Drop Animations**
+Complete overhaul of kanban card drag UX for professional, intuitive feel:
+- **Tilt Effect**: 5-degree rotation when dragging (modern Linear/Notion style)
+- **Pop Effect**: 1.05x scale up so dragged card "lifts" off the board
+- **Enhanced Shadows**: Layered depth shadows (16px + 8px blur) for floating effect
+- **Smooth Transitions**: Cubic-bezier spring animations (200ms) for natural feel
+- **Smart Spacing**: Cards smoothly push apart with 48px margin to show drop zone
+- **Visual Drop Indicator**: Glowing blue pulsing line shows exactly where card will land
+- **Cursor Feedback**: Changes to "grabbing" cursor during drag
+- **Opacity**: Dragged card at 80% opacity for ghost effect
+- All animations use hardware-accelerated transforms for 60fps performance
+- Files: `kanbanCard.tsx`, `kanbanCard.scss`
 
 **Icon System Architecture**
 - `lucideIconList.ts`: Curated icon lists and emoji mapping (source of truth for emoji→Lucide conversion)

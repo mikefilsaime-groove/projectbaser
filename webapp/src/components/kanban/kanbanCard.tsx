@@ -133,9 +133,13 @@ const KanbanCard = (props: Props) => {
         <>
             <div
                 ref={props.readonly ? () => null : cardRef}
-                className={`${className}`}
+                className={`${className} ${isDragging ? 'is-dragging' : ''}`}
                 draggable={!props.readonly}
-                style={{opacity: isDragging ? 0.5 : 1}}
+                style={{
+                    opacity: isDragging ? 0.8 : 1,
+                    transform: isDragging ? 'rotate(5deg) scale(1.05)' : 'none',
+                    cursor: isDragging ? 'grabbing' : 'pointer',
+                }}
                 onClick={handleOnClick}
             >
                 {!props.readonly &&
