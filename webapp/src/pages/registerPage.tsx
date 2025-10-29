@@ -44,61 +44,67 @@ const RegisterPage = () => {
 
     return (
         <div className='RegisterPage'>
-            <form
-                onSubmit={(e: React.FormEvent) => {
-                    e.preventDefault()
-                    handleRegister()
-                }}
-            >
-                <div className='title'>
-                    <FormattedMessage
-                        id='register.signup-title'
-                        defaultMessage='Sign up for your account'
-                    />
+            <div className='register-container'>
+                <div className='register-header'>
+                    <img src='/static/landing/logo.png' alt='ProjectBaser' className='register-logo'/>
+                    <h1>ProjectBaser</h1>
                 </div>
-                <div className='email'>
-                    <input
-                        id='login-email'
-                        placeholder={'Enter email'}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value.trim())}
-                    />
-                </div>
-                <div className='username'>
-                    <input
-                        id='login-username'
-                        placeholder={'Enter username'}
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value.trim())}
-                    />
-                </div>
-                <div className='password'>
-                    <input
-                        id='login-password'
-                        type='password'
-                        placeholder={'Enter password'}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <Button
-                    filled={true}
-                    submit={true}
+                <form
+                    onSubmit={(e: React.FormEvent) => {
+                        e.preventDefault()
+                        handleRegister()
+                    }}
                 >
-                    {'Register'}
-                </Button>
-            </form>
-            <Link to='/login'>
-                <FormattedMessage
-                    id='register.login-button'
-                    defaultMessage={'or log in if you already have an account'}
-                />
-            </Link>
-            {errorMessage &&
-                <div className='error'>
-                    {errorMessage}
-                </div>
-            }
+                    <div className='title'>
+                        <FormattedMessage
+                            id='register.signup-title'
+                            defaultMessage='Sign up for your account'
+                        />
+                    </div>
+                    <div className='email'>
+                        <input
+                            id='login-email'
+                            placeholder={'Enter email'}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value.trim())}
+                        />
+                    </div>
+                    <div className='username'>
+                        <input
+                            id='login-username'
+                            placeholder={'Enter username'}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value.trim())}
+                        />
+                    </div>
+                    <div className='password'>
+                        <input
+                            id='login-password'
+                            type='password'
+                            placeholder={'Enter password'}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <Button
+                        filled={true}
+                        submit={true}
+                    >
+                        {'Register'}
+                    </Button>
+                </form>
+                <Link to='/login' className='login-link'>
+                    <FormattedMessage
+                        id='register.login-button'
+                        defaultMessage={'or log in if you already have an account'}
+                    />
+                </Link>
+                {errorMessage &&
+                    <div className='error'>
+                        {errorMessage}
+                    </div>
+                }
+            </div>
         </div>
     )
 }

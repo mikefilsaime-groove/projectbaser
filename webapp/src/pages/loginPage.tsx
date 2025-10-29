@@ -40,62 +40,68 @@ const LoginPage = () => {
 
     return (
         <div className='LoginPage'>
-            <form
-                onSubmit={(e: React.FormEvent) => {
-                    e.preventDefault()
-                    handleLogin()
-                }}
-            >
-                <div className='title'>
-                    <FormattedMessage
-                        id='login.log-in-title'
-                        defaultMessage='Log in'
-                    />
+            <div className='login-container'>
+                <div className='login-header'>
+                    <img src='/static/landing/logo.png' alt='ProjectBaser' className='login-logo'/>
+                    <h1>ProjectBaser</h1>
                 </div>
-                <div className='username'>
-                    <input
-                        id='login-username'
-                        placeholder={'Enter username'}
-                        value={username}
-                        onChange={(e) => {
-                            setUsername(e.target.value)
-                            setErrorMessage('')
-                        }}
-                    />
-                </div>
-                <div className='password'>
-                    <input
-                        id='login-password'
-                        type='password'
-                        placeholder={'Enter password'}
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value)
-                            setErrorMessage('')
-                        }}
-                    />
-                </div>
-                <Button
-                    filled={true}
-                    submit={true}
+                <form
+                    onSubmit={(e: React.FormEvent) => {
+                        e.preventDefault()
+                        handleLogin()
+                    }}
                 >
+                    <div className='title'>
+                        <FormattedMessage
+                            id='login.log-in-title'
+                            defaultMessage='Log in'
+                        />
+                    </div>
+                    <div className='username'>
+                        <input
+                            id='login-username'
+                            placeholder={'Enter username'}
+                            value={username}
+                            onChange={(e) => {
+                                setUsername(e.target.value)
+                                setErrorMessage('')
+                            }}
+                        />
+                    </div>
+                    <div className='password'>
+                        <input
+                            id='login-password'
+                            type='password'
+                            placeholder={'Enter password'}
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                                setErrorMessage('')
+                            }}
+                        />
+                    </div>
+                    <Button
+                        filled={true}
+                        submit={true}
+                    >
+                        <FormattedMessage
+                            id='login.log-in-button'
+                            defaultMessage='Log in'
+                        />
+                    </Button>
+                </form>
+                <Link to='/register' className='register-link'>
                     <FormattedMessage
-                        id='login.log-in-button'
-                        defaultMessage='Log in'
+                        id='login.register-button'
+                        defaultMessage={'or create an account if you don\'t have one'}
                     />
-                </Button>
-            </form>
-            <Link to='/register'>
-                <FormattedMessage
-                    id='login.register-button'
-                    defaultMessage={'or create an account if you don\'t have one'}
-                />
-            </Link>
-            {errorMessage &&
-                <div className='error'>
-                    {errorMessage}
-                </div>
-            }
+                </Link>
+                {errorMessage &&
+                    <div className='error'>
+                        {errorMessage}
+                    </div>
+                }
+            </div>
         </div>
     )
 }
