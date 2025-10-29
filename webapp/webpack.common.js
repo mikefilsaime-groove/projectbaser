@@ -97,13 +97,13 @@ function makeCommonConfig() {
                 template: 'html-templates/page.ejs',
                 filename: 'index.html',
                 publicPath: '{{.BaseURL}}/',
-                hash: true,
+                hash: false,
             }),
         ],
         entry: ['./src/main.tsx', './src/userSettings.ts'],
         output: {
             library: 'ProjectBaser',
-            filename: 'static/[name].js',
+            filename: 'static/[name].[contenthash:8].js',
             path: outpath,
         },
     };
