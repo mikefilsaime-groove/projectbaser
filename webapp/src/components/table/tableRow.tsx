@@ -2,6 +2,29 @@
 // See LICENSE.txt for license information.
 import React, {useEffect, useRef, useState, useMemo, useCallback} from 'react'
 import {FormattedMessage, useIntl} from 'react-intl'
+import {
+    Circle, CheckSquare, Calendar, Clock, FileText, Image, Link, Tag, User, Users,
+    Folder, File, Archive, Bookmark, Bell, Flag, Star, Heart, Target, TrendingUp,
+    BarChart, PieChart, Activity, Briefcase, ShoppingCart, DollarSign, CreditCard,
+    MapPin, Globe, Mail, Phone, MessageSquare, Send, Paperclip, Download, Upload,
+    Settings, Wrench, Search, Filter, Eye, Lock, Unlock, Shield, AlertCircle,
+    CheckCircle, XCircle, Info, HelpCircle, Home, Menu, ChevronRight, ChevronDown,
+    Plus, Minus, X, Check, Edit, Trash, Copy, Clipboard, Share, ExternalLink,
+    Zap, Code, Terminal, Box, Package, Layers, Grid, List, LayoutGrid, Columns,
+    AlignLeft, AlignCenter, AlignRight, AlignJustify, Bold, Italic, Underline,
+    Hash, AtSign, Percent, Smile, ThumbsUp, Award, Gift, Trophy, Lightbulb,
+    Book, GraduationCap, Palette, Music, Video, Camera, Mic, Speaker,
+    Wifi, Bluetooth, Battery, Cpu, HardDrive, Monitor, Printer, Smartphone,
+    Tablet, Watch, Play, Pause, StopCircle, SkipForward, SkipBack,
+    Volume, VolumeX, Sun, Moon, Cloud, CloudRain, Wind, Thermometer,
+    // Additional icons from emoji mapping
+    Hand, Move, CheckCircle2, AlertTriangle, Flame, Sparkles, CalendarDays,
+    CalendarCheck, BarChart3, TrendingDown, Film, Sliders, Glasses,
+    BookOpen, Laptop, Key, Trash2, Edit3, Banknote, PenTool, Microscope,
+    Compass, Mountain, PartyPopper, Car, Inbox, Timer, Hourglass,
+    FolderOpen, Rocket, Handshake, TestTube, Building, Plug, Frame, 
+    CloudRainWind, Trees, Bug, Bird, Cat, Construction,
+} from 'lucide-react'
 
 import {Card} from '../../blocks/card'
 import {Board, IPropertyTemplate} from '../../blocks/board'
@@ -22,10 +45,35 @@ import Tooltip from '../../widgets/tooltip'
 import ConfirmationDialogBox, {ConfirmationDialogBoxProps} from '../confirmationDialogBox'
 import TelemetryClient, {TelemetryActions, TelemetryCategory} from '../../telemetry/telemetryClient'
 import CardActionsMenu from '../cardActionsMenu/cardActionsMenu'
+import {convertEmojiToLucideIcon} from '../../lucideIconList'
 
 import {useColumnResize} from './tableColumnResizeContext'
 
 import './tableRow.scss'
+
+const LucideIcons: Record<string, any> = {
+    Circle, CheckSquare, Calendar, Clock, FileText, Image, Link, Tag, User, Users,
+    Folder, File, Archive, Bookmark, Bell, Flag, Star, Heart, Target, TrendingUp,
+    BarChart, PieChart, Activity, Briefcase, ShoppingCart, DollarSign, CreditCard,
+    MapPin, Globe, Mail, Phone, MessageSquare, Send, Paperclip, Download, Upload,
+    Settings, Wrench, Search, Filter, Eye, Lock, Unlock, Shield, AlertCircle,
+    CheckCircle, XCircle, Info, HelpCircle, Home, Menu, ChevronRight, ChevronDown,
+    Plus, Minus, X, Check, Edit, Trash, Copy, Clipboard, Share, ExternalLink,
+    Zap, Code, Terminal, Box, Package, Layers, Grid, List, LayoutGrid, Columns,
+    AlignLeft, AlignCenter, AlignRight, AlignJustify, Bold, Italic, Underline,
+    Hash, AtSign, Percent, Smile, ThumbsUp, Award, Gift, Trophy, Lightbulb,
+    Book, GraduationCap, Palette, Music, Video, Camera, Mic, Speaker,
+    Wifi, Bluetooth, Battery, Cpu, HardDrive, Monitor, Printer, Smartphone,
+    Tablet, Watch, Play, Pause, StopCircle, SkipForward, SkipBack,
+    Volume, VolumeX, Sun, Moon, Cloud, CloudRain, Wind, Thermometer,
+    // Additional icons from emoji mapping
+    Hand, Move, CheckCircle2, AlertTriangle, Flame, Sparkles, CalendarDays,
+    CalendarCheck, BarChart3, TrendingDown, Film, Sliders, Glasses,
+    BookOpen, Laptop, Key, Trash2, Edit3, Banknote, PenTool, Microscope,
+    Compass, Mountain, PartyPopper, Car, Inbox, Timer, Hourglass,
+    FolderOpen, Rocket, Handshake, TestTube, Building, Plug, Frame,
+    CloudRainWind, Trees, Bug, Bird, Cat, Construction,
+}
 
 type Props = {
     board: Board
@@ -167,7 +215,15 @@ const TableRow = (props: Props) => {
                 ref={(ref) => columnResize.updateRef(card.id, Constants.titleColumnId, ref)}
             >
                 <div className='octo-icontitle'>
-                    <div className='octo-icon'>{card.fields.icon}</div>
+                    { card.fields.icon ? (
+                        <div className='octo-icon lucide-icon'>
+                            {(() => {
+                                const iconName = convertEmojiToLucideIcon(card.fields.icon)
+                                const IconComponent = LucideIcons[iconName]
+                                return IconComponent ? <IconComponent size={16} /> : <LucideIcons.Circle size={16} />
+                            })()}
+                        </div>
+                    ) : undefined }
                     <Editable
                         ref={titleRef}
                         value={title}
