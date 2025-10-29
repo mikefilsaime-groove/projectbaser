@@ -224,7 +224,7 @@ const KanbanCard = (props: Props) => {
                 onDrag={handleDrag}
                 onDragEnd={handleDragEnd}
                 style={{
-                    opacity: isDragging ? 0.3 : 1,
+                    opacity: isDragging ? 0 : 1,
                     cursor: isDragging ? 'grabbing' : 'pointer',
                 }}
                 onClick={handleOnClick}
