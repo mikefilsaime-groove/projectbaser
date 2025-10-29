@@ -51,9 +51,10 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
 - Installed `lucide-react` package for professional icon system
 - Created `lucideIconList.ts` with 150+ curated Lucide icons
 - Built searchable `LucidePicker` component replacing emoji picker
-- **Database Migration**: Replaced ALL emojis in database with Lucide icon names
-  - Migrated 82 icons across boards and cards (🎯→Target, 📝→FileText, 🔬→Microscope, etc.)
-  - Icons now stored as "Target", "Smile", "Banknote" instead of emoji characters
+- **Database Migration**: Replaced ALL emojis with Lucide icon names
+  - **Card/Board Icons**: Migrated 82 icons (🎯→Target, 📝→FileText, 🔬→Microscope, etc.)
+  - **Property Options**: Cleaned 36 options across 12 boards ("High 🔥"→"High", "Done 🙌"→"Done", "Bug 🐞"→"Bug", etc.)
+  - Icons stored as clean names: "Target", "High", "Banknote" (no emoji characters)
   - Eliminates Unicode normalization issues (variation selectors, ZWJ sequences)
   - Clean separation: database stores icon names, UI renders Lucide components
 - Updated all icon selectors to render Lucide SVG icons
