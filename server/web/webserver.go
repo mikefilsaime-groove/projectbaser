@@ -85,7 +85,14 @@ func (ws *Server) AddRoutes(rs RoutedService) {
 }
 
 func (ws *Server) registerRoutes() {
-        ws.Router().PathPrefix("/static").Handler(http.StripPrefix(ws.basePrefix+"/static/", http.FileServer(http.Dir(filepath.Join(ws.rootPath, "static")))))
+        // Serve static files with no-cache headers to prevent aggressive browser caching
+        staticHandler := http.StripPrefix(ws.basePrefix+"/static/", http.FileServer(http.Dir(filepath.Join(ws.rootPath, "static"))))
+        ws.Router().PathPrefix("/static").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+                w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+                w.Header().Set("Pragma", "no-cache")
+                w.Header().Set("Expires", "0")
+                staticHandler.ServeHTTP(w, r)
+        })
         
         ws.Router().PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
                 // Always serve the React app - it will handle showing landing page vs dashboard

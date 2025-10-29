@@ -15,8 +15,8 @@ const LandingRedirect = (): JSX.Element | null => {
             // User is logged in, redirect to dashboard
             history.replace('/team/0')
         } else if (loggedIn === false) {
-            // User is not logged in, redirect to login page
-            history.replace('/login')
+            // User is not logged in, show landing page
+            window.location.href = '/static/landing/index.html'
         }
         // If loggedIn is null, we're still checking, so wait
     }, [loggedIn, history])
