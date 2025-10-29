@@ -127,6 +127,45 @@ func getTeamID(r *http.Request) string {
         return teamID
 }
 
+// validateTeamAccess validates that the requested teamID matches the user's session team_id.
+// Multi-tenant security: prevents users from accessing other teams' data by manipulating URL parameters.
+// GlobalTeamID="0" is NOT accessible for regular operations to prevent cross-tenant data leaks.
+// Templates in GlobalTeamID are accessed via dedicated template endpoints only.
+func validateTeamAccess(r *http.Request, requestedTeamID string) (string, error) {
+        userTeamID := getTeamID(r)
+        
+        // SECURITY: Block access to GlobalTeamID to prevent cross-tenant data leaks
+        // System templates are accessed via dedicated template endpoints
+        if requestedTeamID == model.GlobalTeamID {
+                return "", model.NewErrPermission("access denied: cannot directly access global team")
+        }
+        
+        // User must be accessing their own team's data
+        if requestedTeamID != userTeamID {
+                return "", model.NewErrPermission("access denied: team mismatch")
+        }
+        
+        return requestedTeamID, nil
+}
+
+// validateTeamAccessForTemplates validates team access for template operations.
+// Allows GlobalTeamID="0" for reading system templates, but user's team for everything else.
+func validateTeamAccessForTemplates(r *http.Request, requestedTeamID string) (string, error) {
+        userTeamID := getTeamID(r)
+        
+        // GlobalTeamID is READ-ONLY for system templates
+        if requestedTeamID == model.GlobalTeamID {
+                return requestedTeamID, nil
+        }
+        
+        // User can access their own team's templates
+        if requestedTeamID != userTeamID {
+                return "", model.NewErrPermission("access denied: team mismatch")
+        }
+        
+        return requestedTeamID, nil
+}
+
 func (a *API) panicHandler(next http.Handler) http.Handler {
         return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
                 defer func() {

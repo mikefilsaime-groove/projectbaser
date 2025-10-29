@@ -51,8 +51,15 @@ func (a *API) handleGetBoards(w http.ResponseWriter, r *http.Request) {
         //     schema:
         //       "$ref": "#/definitions/ErrorResponse"
 
-        teamID := mux.Vars(r)["teamID"]
+        requestedTeamID := mux.Vars(r)["teamID"]
         userID := getUserID(r)
+        
+        // Multi-tenant security: Validate user can access the requested team
+        teamID, err := validateTeamAccess(r, requestedTeamID)
+        if err != nil {
+                a.errorResponse(w, r, err)
+                return
+        }
 
         if !a.permissions.HasPermissionToTeam(userID, teamID, model.PermissionViewTeam) {
                 a.errorResponse(w, r, model.NewErrPermission("access denied to team"))
@@ -132,6 +139,18 @@ func (a *API) handleCreateBoard(w http.ResponseWriter, r *http.Request) {
         var newBoard *model.Board
         if err = json.Unmarshal(requestBody, &newBoard); err != nil {
                 a.errorResponse(w, r, model.NewErrBadRequest(err.Error()))
+                return
+        }
+
+        // Multi-tenant security: Block writes to GlobalTeamID and validate team ownership
+        if newBoard.TeamID == model.GlobalTeamID {
+                a.errorResponse(w, r, model.NewErrPermission("cannot create boards in global team"))
+                return
+        }
+        
+        userTeamID := getTeamID(r)
+        if newBoard.TeamID != userTeamID {
+                a.errorResponse(w, r, model.NewErrPermission("can only create boards in your own team"))
                 return
         }
 
@@ -491,6 +510,18 @@ func (a *API) handleDuplicateBoard(w http.ResponseWriter, r *http.Request) {
 
         if toTeam == "" {
                 toTeam = board.TeamID
+        }
+        
+        // Multi-tenant security: Block duplicating to GlobalTeamID and enforce team ownership
+        if toTeam == model.GlobalTeamID {
+                a.errorResponse(w, r, model.NewErrPermission("cannot duplicate boards to global team"))
+                return
+        }
+        
+        userTeamID := getTeamID(r)
+        if toTeam != userTeamID {
+                a.errorResponse(w, r, model.NewErrPermission("can only duplicate boards to your own team"))
+                return
         }
 
         if toTeam == "" && !a.permissions.HasPermissionToTeam(userID, board.TeamID, model.PermissionViewTeam) {

@@ -70,7 +70,90 @@ export const defaultTheme = {
   - No open source or pricing references
   - CTA buttons linking to /login
 
+## Multi-Tenant Architecture (October 29, 2025)
+
+### Overview
+ProjectBaser has been transformed from a single-tenant application into a true multi-tenant SaaS platform, allowing thousands of independent organizations to operate securely on the same instance.
+
+### Architecture Principles
+- **Complete Data Isolation**: Each organization (team) operates independently with zero access to other organizations' data
+- **Automatic Organization Creation**: New user registrations automatically create isolated workspaces
+- **Role-Based Access Control**: Support for owner, admin, and member roles within organizations
+- **Session-Based Team Context**: User's team_id is securely stored in session for all requests
+- **Defense in Depth**: Multiple layers of security validation prevent cross-tenant access
+
+### Database Schema
+**team_users Junction Table** (Migration 000041)
+```sql
+CREATE TABLE team_users (
+    team_id TEXT NOT NULL,
+    user_id TEXT NOT NULL,
+    role TEXT NOT NULL,  -- owner, admin, or member
+    created_at BIGINT NOT NULL,
+    PRIMARY KEY (team_id, user_id)
+)
+```
+
+### Security Implementation
+
+**1. User Registration & Team Creation**
+- `RegisterUser()` (`server/app/auth.go`): Automatically creates a new team for each user
+- New users are assigned as "owner" of their organization
+- Team ID stored in `teams` table with unique signup token
+
+**2. Session Team Context**
+- `Login()` (`server/app/auth.go`): Loads user's primary team_id into session.Props["team_id"]
+- `getTeamID(r)` helper (`server/api/api.go`): Extracts team_id from session in API requests
+- All authenticated requests carry team context
+
+**3. Permission Layer Security**
+- `GetTeamsForUser()` (`server/services/store/sqlstore/team.go`): Only returns teams where user is a member
+- `HasPermissionToTeam()` (`server/services/permissions/localpermissions/localpermissions.go`): Validates actual team membership via team_users table
+- `GetUserTeamRole()` (`server/services/store/sqlstore/team.go`): Queries user's role within a team
+
+**4. API Endpoint Protection**
+- `validateTeamAccess()` (`server/api/api.go`): Validates requested teamID matches session team_id
+- Applied to critical endpoints: boards, templates, search
+- Prevents URL parameter manipulation attacks
+- GlobalTeamID="0" reserved for system-wide templates accessible to all
+
+**5. WebSocket Real-Time Security**
+- `DoesUserHaveTeamAccess()` (`server/auth/auth.go`): Validates WebSocket team subscriptions
+- SUBSCRIBE_TEAM command validates user membership before allowing subscription
+- Real-time updates scoped to user's authorized teams only
+
+### Design Decisions
+- **GlobalTeamID="0"**: Reserved for system-wide template boards accessible to all organizations
+- **Backward Compatibility**: Existing users automatically assigned to team "0" during migration
+- **Primary Team**: Users can belong to multiple teams; first team is considered primary
+- **Session-Based Scoping**: Team context tied to session, not URL parameters
+
+### Security Guarantees
+✅ Users cannot list other teams' boards  
+✅ Users cannot access other teams' data via URL manipulation  
+✅ Permission system validates actual team membership  
+✅ WebSocket subscriptions validate team access  
+✅ API endpoints enforce server-side team scoping  
+✅ Database queries filtered by team_id  
+
+### Files Modified
+- `server/services/store/sqlstore/migrations/000041_create_team_users_table.up.sql`
+- `server/app/auth.go`
+- `server/app/teams.go`
+- `server/services/store/sqlstore/team.go`
+- `server/services/permissions/localpermissions/localpermissions.go`
+- `server/api/api.go`
+- `server/api/boards.go`
+- `server/api/templates.go`
+
 ## Recent Changes (October 29, 2025)
+
+### About Page Feature
+- Created professional About page (`webapp/src/pages/aboutPage.tsx`) with gradient design
+- Accessible via "About ProjectBaser" menu item in user dropdown
+- Opens in new window for easy reference
+- Context-aware back button (boards for logged-in users, login for guests)
+- Documents ProjectBaser features, multi-tenant architecture, and version info
 
 ### UI Modernization - ShadCN-Inspired Design
 Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthetic:

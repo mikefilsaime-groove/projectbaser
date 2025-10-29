@@ -43,13 +43,13 @@ func (a *API) handleGetTemplates(w http.ResponseWriter, r *http.Request) {
         //     schema:
         //       "$ref": "#/definitions/ErrorResponse"
 
-        teamID := mux.Vars(r)["teamID"]
+        requestedTeamID := mux.Vars(r)["teamID"]
         userID := getUserID(r)
 
-        // Multi-tenant: Users can access templates in their own team or global templates (team_id="0")
-        userTeamID := getTeamID(r)
-        if teamID != model.GlobalTeamID && teamID != userTeamID && !a.permissions.HasPermissionToTeam(userID, teamID, model.PermissionViewTeam) {
-                a.errorResponse(w, r, model.NewErrPermission("access denied to team"))
+        // Multi-tenant security: Validate user can access templates (allows GlobalTeamID="0" for system templates)
+        teamID, err := validateTeamAccessForTemplates(r, requestedTeamID)
+        if err != nil {
+                a.errorResponse(w, r, err)
                 return
         }
 
