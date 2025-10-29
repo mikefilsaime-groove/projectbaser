@@ -33,14 +33,9 @@
         background-color: rgba(90, 200, 255, 0.2);
     }
 
-    // Enhanced dragging state
+    // Enhanced dragging state (hides original while drag preview shows)
     &.is-dragging {
-        z-index: 1000;
-        box-shadow: 
-            rgba(var(--center-channel-color-rgb), 0.15) 0 0 0 1px,
-            rgba(var(--center-channel-color-rgb), 0.25) 0 16px 32px,
-            rgba(var(--center-channel-color-rgb), 0.15) 0 8px 16px;
-        background-color: rgb(var(--center-channel-bg-rgb));
+        opacity: 0 !important;
     }
 
     // Drag over state (card being hovered over - creates space for drop)

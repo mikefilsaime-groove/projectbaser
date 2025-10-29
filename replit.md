@@ -66,20 +66,21 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
   - Status: "Completed"→CheckCircle, "In Progress"→Play, "Blocked"→XCircle
   - Types: "Bug"→Bug, "Epic"→Mountain, "Feature"→Construction, "Task"→CheckSquare
   - 20+ intelligent pattern matches for automatic icon selection
-- Current bundle: `main.d1fc4447.js` with all Lucide icons, property badge icons, and enhanced drag animations
+- Current bundle: `main.aa3ebfe5.js` with all Lucide icons, property badge icons, and enhanced drag animations
 
 **Enhanced Drag-and-Drop Animations**
 Complete overhaul of kanban card drag UX for professional, intuitive feel:
-- **Tilt Effect**: 5-degree rotation when dragging (modern Linear/Notion style)
+- **Custom Drag Preview**: Native HTML5 drag with tilted preview following cursor
+- **Tilt Effect**: 5-degree rotation on drag preview (modern Linear/Notion style)
 - **Pop Effect**: 1.05x scale up so dragged card "lifts" off the board
-- **Enhanced Shadows**: Layered depth shadows (16px + 8px blur) for floating effect
-- **Smooth Transitions**: Cubic-bezier spring animations (200ms) for natural feel
+- **Enhanced Shadows**: Layered depth shadows (16px + 8px blur) on drag preview
 - **Smart Spacing**: Cards smoothly push apart with 48px margin to show drop zone
 - **Visual Drop Indicator**: Glowing blue pulsing line shows exactly where card will land
-- **Cursor Feedback**: Changes to "grabbing" cursor during drag
-- **Opacity**: Dragged card at 80% opacity for ghost effect
+- **Original Card Fades**: Source card becomes 30% opacity during drag for context
+- **Smooth Transitions**: Cubic-bezier spring animations (250ms) for natural feel
+- Implementation: `onDragStart` handler clones card, applies transforms, sets as `setDragImage()`
 - All animations use hardware-accelerated transforms for 60fps performance
-- Files: `kanbanCard.tsx`, `kanbanCard.scss`
+- Files: `kanbanCard.tsx`, `kanbanCard.scss`, `sortable.tsx`
 
 **Icon System Architecture**
 - `lucideIconList.ts`: Curated icon lists and emoji mapping (source of truth for emoji→Lucide conversion)

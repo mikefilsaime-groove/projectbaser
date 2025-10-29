@@ -84,12 +84,39 @@ type Props = {
 const KanbanCard = (props: Props) => {
     const {card, board} = props
     const intl = useIntl()
-    const [isDragging, isOver, cardRef] = useSortable('card', card, !props.readonly, props.onDrop)
+    const [isDragging, isOver, cardRef, preview] = useSortable('card', card, !props.readonly, props.onDrop)
     const visiblePropertyTemplates = props.visiblePropertyTemplates || []
     let className = props.isSelected ? 'KanbanCard selected' : 'KanbanCard'
     if (props.isManualSort && isOver) {
         className += ' dragover'
     }
+
+    // Create custom drag preview with tilt effect
+    const handleDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return
+        
+        const target = e.currentTarget as HTMLDivElement
+        
+        // Create a clone of the card element for drag preview
+        const dragPreview = cardRef.current.cloneNode(true) as HTMLElement
+        dragPreview.style.position = 'absolute'
+        dragPreview.style.top = '-10000px'
+        dragPreview.style.transform = 'rotate(5deg) scale(1.05)'
+        dragPreview.style.boxShadow = 'rgba(0, 0, 0, 0.25) 0 16px 32px, rgba(0, 0, 0, 0.15) 0 8px 16px'
+        dragPreview.style.borderRadius = '8px'
+        dragPreview.style.opacity = '0.9'
+        dragPreview.style.pointerEvents = 'none'
+        
+        document.body.appendChild(dragPreview)
+        
+        // Set as drag image
+        e.dataTransfer.setDragImage(dragPreview, target.offsetWidth / 2, target.offsetHeight / 2)
+        
+        // Clean up after drag starts
+        setTimeout(() => {
+            document.body.removeChild(dragPreview)
+        }, 0)
+    }, [])
 
     const [showConfirmationDialogBox, setShowConfirmationDialogBox] = useState<boolean>(false)
     const handleDeleteCard = useCallback(() => {
@@ -135,9 +162,9 @@ const KanbanCard = (props: Props) => {
                 ref={props.readonly ? () => null : cardRef}
                 className={`${className} ${isDragging ? 'is-dragging' : ''}`}
                 draggable={!props.readonly}
+                onDragStart={handleDragStart}
                 style={{
-                    opacity: isDragging ? 0.8 : 1,
-                    transform: isDragging ? 'rotate(5deg) scale(1.05)' : 'none',
+                    opacity: isDragging ? 0.3 : 1,
                     cursor: isDragging ? 'grabbing' : 'pointer',
                 }}
                 onClick={handleOnClick}
