@@ -16,6 +16,7 @@ import ChangePasswordPage from './pages/changePasswordPage'
 import ErrorPage from './pages/errorPage'
 import LoginPage from './pages/loginPage'
 import RegisterPage from './pages/registerPage'
+import LandingRedirect from './pages/landingRedirect'
 import {Utils} from './utils'
 import octoClient from './octoClient'
 import {setGlobalError, getGlobalError} from './store/globalError'
@@ -80,6 +81,10 @@ const FocalboardRouter = (props: Props): JSX.Element => {
         <Router history={browserHistory}>
             <GlobalErrorRedirect/>
             <Switch>
+                <FBRoute exact={true} path='/'>
+                    <LandingRedirect/>
+                </FBRoute>
+
                 <FBRoute path='/error'>
                     <ErrorPage/>
                 </FBRoute>
