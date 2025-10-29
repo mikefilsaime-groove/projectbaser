@@ -88,7 +88,14 @@ func (ws *Server) registerRoutes() {
         ws.Router().PathPrefix("/static").Handler(http.StripPrefix(ws.basePrefix+"/static/", http.FileServer(http.Dir(filepath.Join(ws.rootPath, "static")))))
         
         ws.Router().PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-                if r.URL.Path == "/" {
+                // Check if user is logged in by checking for auth cookie
+                hasAuthCookie := false
+                if cookie, err := r.Cookie("FOCALBOARDAUTHTOKEN"); err == nil && cookie.Value != "" {
+                        hasAuthCookie = true
+                }
+                
+                // If user is on root path and NOT logged in, show landing page
+                if r.URL.Path == "/" && !hasAuthCookie {
                         landingPage := filepath.Join(ws.rootPath, "static", "landing", "index.html")
                         if fileExists(landingPage) {
                                 http.ServeFile(w, r, landingPage)
@@ -96,6 +103,7 @@ func (ws *Server) registerRoutes() {
                         }
                 }
                 
+                // Otherwise, serve the app
                 w.Header().Set("Content-Type", "text/html; charset=utf-8")
                 indexTemplate, err := template.New("index").ParseFiles(path.Join(ws.rootPath, "index.html"))
                 if err != nil {
