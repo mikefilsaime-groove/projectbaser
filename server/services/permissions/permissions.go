@@ -5,20 +5,21 @@
 package permissions
 
 import (
-	"github.com/mattermost/focalboard/server/model"
+        "github.com/mattermost/focalboard/server/model"
 
-	mmModel "github.com/mattermost/mattermost/server/public/model"
+        mmModel "github.com/mattermost/mattermost/server/public/model"
 )
 
 type PermissionsService interface {
-	HasPermissionTo(userID string, permission *mmModel.Permission) bool
-	HasPermissionToTeam(userID, teamID string, permission *mmModel.Permission) bool
-	HasPermissionToChannel(userID, channelID string, permission *mmModel.Permission) bool
-	HasPermissionToBoard(userID, boardID string, permission *mmModel.Permission) bool
+        HasPermissionTo(userID string, permission *mmModel.Permission) bool
+        HasPermissionToTeam(userID, teamID string, permission *mmModel.Permission) bool
+        HasPermissionToChannel(userID, channelID string, permission *mmModel.Permission) bool
+        HasPermissionToBoard(userID, boardID string, permission *mmModel.Permission) bool
 }
 
 type Store interface {
-	GetBoard(boardID string) (*model.Board, error)
-	GetMemberForBoard(boardID, userID string) (*model.BoardMember, error)
-	GetBoardHistory(boardID string, opts model.QueryBoardHistoryOptions) ([]*model.Board, error)
+        GetBoard(boardID string) (*model.Board, error)
+        GetMemberForBoard(boardID, userID string) (*model.BoardMember, error)
+        GetBoardHistory(boardID string, opts model.QueryBoardHistoryOptions) ([]*model.Board, error)
+        GetUserTeamRole(teamID, userID string) (string, error)
 }

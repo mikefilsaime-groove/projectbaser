@@ -4,85 +4,104 @@
 package localpermissions
 
 import (
-	"github.com/mattermost/focalboard/server/model"
-	"github.com/mattermost/focalboard/server/services/permissions"
+        "github.com/mattermost/focalboard/server/model"
+        "github.com/mattermost/focalboard/server/services/permissions"
 
-	mmModel "github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+        mmModel "github.com/mattermost/mattermost/server/public/model"
+        "github.com/mattermost/mattermost/server/public/shared/mlog"
 )
 
 type Service struct {
-	store  permissions.Store
-	logger mlog.LoggerIFace
+        store  permissions.Store
+        logger mlog.LoggerIFace
 }
 
 func New(store permissions.Store, logger mlog.LoggerIFace) *Service {
-	return &Service{
-		store:  store,
-		logger: logger,
-	}
+        return &Service{
+                store:  store,
+                logger: logger,
+        }
 }
 
 func (s *Service) HasPermissionTo(userID string, permission *mmModel.Permission) bool {
-	return false
+        return false
 }
 
 func (s *Service) HasPermissionToTeam(userID, teamID string, permission *mmModel.Permission) bool {
-	if userID == "" || teamID == "" || permission == nil {
-		return false
-	}
-	if permission.Id == model.PermissionManageTeam.Id {
-		return false
-	}
-	return true
+        if userID == "" || teamID == "" || permission == nil {
+                return false
+        }
+
+        // Multi-tenant: Check if user is actually a member of this team
+        // GlobalTeamID="0" is special - it holds system templates accessible to all
+        if teamID != model.GlobalTeamID {
+                role, err := s.store.GetUserTeamRole(teamID, userID)
+                if err != nil {
+                        // User is not a member of this team
+                        s.logger.Debug("User does not have access to team",
+                                mlog.String("userID", userID),
+                                mlog.String("teamID", teamID),
+                                mlog.Err(err),
+                        )
+                        return false
+                }
+                
+                // Check permission based on role
+                if permission.Id == model.PermissionManageTeam.Id {
+                        // Only owners and admins can manage teams
+                        return role == "owner" || role == "admin"
+                }
+        }
+        
+        return true
 }
 
 func (s *Service) HasPermissionToChannel(userID, channelID string, permission *mmModel.Permission) bool {
-	if userID == "" || channelID == "" || permission == nil {
-		return false
-	}
-	return true
+        if userID == "" || channelID == "" || permission == nil {
+                return false
+        }
+        return true
 }
 
 func (s *Service) HasPermissionToBoard(userID, boardID string, permission *mmModel.Permission) bool {
-	if userID == "" || boardID == "" || permission == nil {
-		return false
-	}
+        if userID == "" || boardID == "" || permission == nil {
+                return false
+        }
 
-	member, err := s.store.GetMemberForBoard(boardID, userID)
-	if model.IsErrNotFound(err) {
-		return false
-	}
-	if err != nil {
-		s.logger.Error("error getting member for board",
-			mlog.String("boardID", boardID),
-			mlog.String("userID", userID),
-			mlog.Err(err),
-		)
-		return false
-	}
+        member, err := s.store.GetMemberForBoard(boardID, userID)
+        if model.IsErrNotFound(err) {
+                return false
+        }
+        if err != nil {
+                s.logger.Error("error getting member for board",
+                        mlog.String("boardID", boardID),
+                        mlog.String("userID", userID),
+                        mlog.Err(err),
+                )
+                return false
+        }
 
-	switch member.MinimumRole {
-	case "admin":
-		member.SchemeAdmin = true
-	case "editor":
-		member.SchemeEditor = true
-	case "commenter":
-		member.SchemeCommenter = true
-	case "viewer":
-		member.SchemeViewer = true
-	}
+        switch member.MinimumRole {
+        case "admin":
+                member.SchemeAdmin = true
+        case "editor":
+                member.SchemeEditor = true
+        case "commenter":
+                member.SchemeCommenter = true
+        case "viewer":
+                member.SchemeViewer = true
+        }
 
-	switch permission {
-	case model.PermissionManageBoardType, model.PermissionDeleteBoard, model.PermissionManageBoardRoles, model.PermissionShareBoard, model.PermissionDeleteOthersComments:
-		return member.SchemeAdmin
-	case model.PermissionManageBoardCards, model.PermissionManageBoardProperties:
-		return member.SchemeAdmin || member.SchemeEditor
-	case model.PermissionCommentBoardCards:
-		return member.SchemeAdmin || member.SchemeEditor || member.SchemeCommenter
-	case model.PermissionViewBoard:
-		return member.SchemeAdmin || member.SchemeEditor || member.SchemeCommenter || member.SchemeViewer
-	default:
-		return false
-	}
+        switch permission {
+        case model.PermissionManageBoardType, model.PermissionDeleteBoard, model.PermissionManageBoardRoles, model.PermissionShareBoard, model.PermissionDeleteOthersComments:
+                return member.SchemeAdmin
+        case model.PermissionManageBoardCards, model.PermissionManageBoardProperties:
+                return member.SchemeAdmin || member.SchemeEditor
+        case model.PermissionCommentBoardCards:
+                return member.SchemeAdmin || member.SchemeEditor || member.SchemeCommenter
+        case model.PermissionViewBoard:
+                return member.SchemeAdmin || member.SchemeEditor || member.SchemeCommenter || member.SchemeViewer
+        default:
+                return false
+        }
 }

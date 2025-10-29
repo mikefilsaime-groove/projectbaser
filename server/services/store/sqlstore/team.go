@@ -127,8 +127,46 @@ func (s *SQLStore) getTeam(db sq.BaseRunner, id string) (*model.Team, error) {
         return &team, nil
 }
 
-func (s *SQLStore) getTeamsForUser(db sq.BaseRunner, _ string) ([]*model.Team, error) {
-        return s.getAllTeams(db)
+func (s *SQLStore) getTeamsForUser(db sq.BaseRunner, userID string) ([]*model.Team, error) {
+        // Multi-tenant: Only return teams where user is a member via team_users table
+        query := s.getQueryBuilder(db).
+                Select("t.id", "t.signup_token", "COALESCE(t.settings, '{}')", "t.modified_by", "t.update_at").
+                From(s.tablePrefix+"teams as t").
+                Join(s.tablePrefix+"team_users as tu ON t.id = tu.team_id").
+                Where(sq.Eq{"tu.user_id": userID})
+
+        rows, err := query.Query()
+        if err != nil {
+                s.logger.Error("ERROR GetTeamsForUser", mlog.Err(err))
+                return nil, err
+        }
+        defer s.CloseRows(rows)
+
+        teams := []*model.Team{}
+        for rows.Next() {
+                var team model.Team
+                var settingsBytes []byte
+
+                err := rows.Scan(
+                        &team.ID,
+                        &team.SignupToken,
+                        &settingsBytes,
+                        &team.ModifiedBy,
+                        &team.UpdateAt,
+                )
+                if err != nil {
+                        return nil, err
+                }
+
+                err = json.Unmarshal(settingsBytes, &team.Settings)
+                if err != nil {
+                        return nil, err
+                }
+
+                teams = append(teams, &team)
+        }
+
+        return teams, nil
 }
 
 func (s *SQLStore) getTeamCount(db sq.BaseRunner) (int64, error) {
