@@ -12,7 +12,7 @@ const lucideIconList = [
     
     // Organization & Planning
     'Calendar', 'Clock', 'Timer', 'AlarmClock', 'CalendarDays', 'CalendarCheck', 'CalendarClock',
-    'List', 'ListChecks', 'ListTodo', 'Kanban', 'LayoutGrid', 'LayoutList', 'Columns',
+    'List', 'ListChecks', 'ListTodo', 'LayoutGrid', 'LayoutList', 'Columns',
     
     // Communication & Collaboration
     'MessageSquare', 'MessageCircle', 'Mail', 'Send', 'Users', 'User', 'UserPlus', 'UserCheck',
@@ -60,21 +60,21 @@ const lucideIconList = [
 // Random icon selection list (subset) - for new boards/cards
 const randomLucideIconList = [
     'CheckSquare', 'Target', 'Flag', 'Star', 'Lightbulb', 'Zap', 'TrendingUp',
-    'Calendar', 'Clock', 'ListChecks', 'Kanban', 'LayoutGrid',
+    'Calendar', 'Clock', 'ListChecks', 'LayoutGrid',
     'MessageSquare', 'Users', 'Bell', 'Share2', 'Link',
     'FileText', 'Folder', 'Clipboard', 'ClipboardCheck',
     'Settings', 'Filter', 'Edit3', 'Plus',
     'CheckCircle', 'AlertCircle', 'Info', 'RefreshCw',
     'Tag', 'Layers', 'Package', 'Grid',
     'Code', 'Database', 'Globe', 'Lock',
-    'BarChart3', 'LineChart', 'TrendingUp', 'Activity',
+    'BarChart3', 'LineChart', 'Activity',
     'Image', 'Palette', 'Pen', 'Rocket', 'Sparkles',
 ]
 
 // Emoji to Lucide icon mapping for backward compatibility
 const emojiToLucideMap: {[key: string]: string} = {
     // Welcome board emojis
-    '👋': 'HandWave',
+    '👋': 'Hand',
     '🤏': 'Move',
     '☑️': 'CheckSquare',
     '📋': 'Clipboard',
@@ -82,7 +82,7 @@ const emojiToLucideMap: {[key: string]: string} = {
     '📮': 'Mail',
     '📝': 'FileText',
     '🎛️': 'Sliders',
-    '👓': 'Eye',
+    '👓': 'Glasses',
     '🏷️': 'Tag',
     '🔔': 'Bell',
     
@@ -101,7 +101,7 @@ const emojiToLucideMap: {[key: string]: string} = {
     '⚡': 'Zap',
     '🚀': 'Rocket',
     '✨': 'Sparkles',
-    '🙌': 'PartyPopper',
+    '🙌': 'Sparkles',
     
     // Template emojis (Meeting Agenda, Sales Pipeline, etc.)
     '🗓️': 'CalendarCheck',
@@ -112,9 +112,9 @@ const emojiToLucideMap: {[key: string]: string} = {
     '🎨': 'Palette',
     '🎬': 'Film',
     '🏆': 'Trophy',
-    '🎖️': 'Medal',
+    '🎖️': 'Award',
     '⭐': 'Star',
-    '💪': 'Dumbbell',
+    '💪': 'Zap',
     '🎓': 'GraduationCap',
     '📚': 'BookOpen',
     '📱': 'Smartphone',

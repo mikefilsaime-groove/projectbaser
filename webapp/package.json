@@ -48,6 +48,7 @@
 		"imagemin-svgo": "^10.0.1",
 		"imagemin-webp": "^7.0.0",
 		"lodash": "^4.17.21",
+		"lucide-react": "^0.548.0",
 		"marked": "^4.0.12",
 		"mini-create-react-context": "^0.4.1",
 		"moment": "^2.29.1",
