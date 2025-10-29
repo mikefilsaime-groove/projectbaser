@@ -34,6 +34,37 @@ ProjectBaser is a self-hosted project management tool for technical teams. Built
   - CTA buttons linking to /login
 
 ## Recent Changes (October 29, 2025)
+
+### UI Modernization - ShadCN-Inspired Design
+Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthetic:
+
+**Global CSS Variables** (`webapp/src/styles/`)
+- Modern color palette with darker contrast (rgb(9, 9, 11) for text)
+- Dark modern sidebar (rgb(24, 24, 27)) 
+- Soft elevation shadows (ShadCN-inspired layered shadows)
+- Larger border radius (8px default, 12px modals, 10px cards)
+- Consistent RGB triplet format for all color variables
+- Additional modern utility colors (border, muted backgrounds, accent)
+- CSS backup stored in `/backup-css/` for easy rollback
+
+**Complete Emoji Replacement with Lucide Icons**
+- Installed `lucide-react` package for professional icon system
+- Created `lucideIconList.ts` with 150+ curated Lucide icons
+- Built searchable `LucidePicker` component replacing emoji picker
+- Implemented emoji-to-Lucide mapping for backward compatibility
+- Updated all icon selectors to render Lucide SVG icons
+- Handles multi-codepoint emojis (ZWJ sequences, variation selectors)
+- Board icons, card icons, and template icons all use Lucide
+- Existing emoji data automatically converts to Lucide icons
+
+**Icon System Architecture**
+- `lucideIconList.ts`: Curated icon lists and emoji mapping
+- `lucidePicker.tsx/scss`: Modern searchable icon picker (8x grid, 352px wide)
+- `blockIconSelector.tsx`: Renders Lucide icons for cards
+- `boardIconSelector.tsx`: Renders Lucide icons for boards
+- `iconSelector.tsx`: Updated menu to use LucidePicker
+- `blockIcons.ts`: Random Lucide icon selection
+
 ### Rebranding to ProjectBaser
 1. Implemented Lucide "Layers" icon (inline SVG) consistently across all pages:
    - Landing page navigation
@@ -46,15 +77,16 @@ ProjectBaser is a self-hosted project management tool for technical teams. Built
    - Section headers on landing page (Layers, Grid, Users icons)
    - Template cards (Check, Calendar, Clock icons, etc.)
    - Feature highlights (Grid, File, Folder, Lock icons, etc.)
+   - In-app board and card icons (via Lucide icon system)
 4. Created stunning landing page based on focalboard.com content
 5. Re-skinned login and registration pages with modern gradient design
 6. Updated all UI references from "Focalboard" to "ProjectBaser"
 7. Removed all open source references and pricing information
 8. Downloaded and integrated professional stock images
-9. Modified Go server routing:
-   - Landing page shown at root (/) for non-authenticated users
-   - Logged-in users automatically bypass landing page and go directly to app
-   - Checks for FOCALBOARDAUTHTOKEN cookie to determine authentication state
+9. Modified React routing:
+   - Smart redirect at "/" routes logged-in users to dashboard, others to login
+   - No more landing page for authenticated users
+   - Client-side login state detection
 
 ### Previous Setup
 1. Installed Node.js 20 and Go 1.21
@@ -85,14 +117,19 @@ ProjectBaser is a self-hosted project management tool for technical teams. Built
 ```
 
 ## Design & Branding
+- **Design Style**: Modern ShadCN-inspired aesthetic (clean, professional, accessible)
 - **Color Scheme**: Blue/purple gradient (matching Brand Baser style)
+- **Primary Colors**: Darker text contrast, modern blue links, subtle borders
+- **Shadows**: Soft layered elevations (no harsh Bootstrap shadows)
+- **Border Radius**: 8px+ for modern rounded corners
 - **Logo**: Lucide "Layers" icon (inline SVG) used consistently everywhere
-- **Icons Style**: Professional Lucide-style SVG icons (NO emojis)
-- **Typography**: Modern sans-serif fonts
+- **Icons Style**: Professional Lucide SVG icons (NO emojis anywhere)
+- **Typography**: Modern sans-serif fonts with better spacing
 - **Landing Page**: Single-page design with hero, features, templates, and CTA sections
 - **Login/Register**: Matching gradient background with clean white card design
-- **Sidebar**: Clean design without version number
+- **Sidebar**: Clean dark modern design without version number
 - **Favicon**: SVG version of Layers icon
+- **Icon Picker**: Searchable grid interface with 150+ professional icons
 
 ## Configuration Details
 - **Server Port**: 5000 (frontend and backend integrated)
