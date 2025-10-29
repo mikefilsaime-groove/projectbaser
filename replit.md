@@ -56,11 +56,12 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
 - Handles multi-codepoint emojis (ZWJ sequences, variation selectors)
 - Board icons, card icons, and template icons all use Lucide
 - Existing emoji data automatically converts to Lucide icons
+- **Fixed webpack tree-shaking**: Changed from `import *` to explicit named imports (100+ icons) to prevent bundler from removing Lucide library
 
 **Icon System Architecture**
 - `lucideIconList.ts`: Curated icon lists and emoji mapping
 - `lucidePicker.tsx/scss`: Modern searchable icon picker (8x grid, 352px wide)
-- `blockIconSelector.tsx`: Renders Lucide icons for cards
+- `blockIconSelector.tsx`: Renders Lucide icons for cards (explicit imports to force bundling)
 - `boardIconSelector.tsx`: Renders Lucide icons for boards
 - `iconSelector.tsx`: Updated menu to use LucidePicker
 - `blockIcons.ts`: Random Lucide icon selection
