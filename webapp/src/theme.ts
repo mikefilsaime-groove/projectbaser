@@ -41,15 +41,15 @@ export const defaultThemeName = 'default-theme'
 export const defaultTheme = {
     mainBg: '255, 255, 255',
     mainFg: '9, 9, 11',
-    buttonBg: '24, 24, 27',
-    buttonFg: '255, 255, 255',
-    sidebarBg: '24, 24, 27',
-    sidebarFg: '250, 250, 250',
-    sidebarTextActiveBorder: '59, 130, 246',
-    sidebarWhiteLogo: 'true',
+    buttonBg: '124, 58, 237',
+    buttonFg: '247, 250, 252',
+    sidebarBg: '255, 255, 255',
+    sidebarFg: '9, 9, 11',
+    sidebarTextActiveBorder: '124, 58, 237',
+    sidebarWhiteLogo: 'false',
 
-    link: '59, 130, 246',
-    linkVisited: '#551a8b',
+    link: '124, 58, 237',
+    linkVisited: '#7c3aed',
 
     propDefault: '#fff',
     propGray: '#f4f4f5',
@@ -99,11 +99,11 @@ export const lightTheme = {
 
     mainBg: '255, 255, 255',
     mainFg: '9, 9, 11',
-    buttonBg: '59, 130, 246',
-    buttonFg: '255, 255, 255',
-    sidebarBg: '244, 244, 245',
+    buttonBg: '124, 58, 237',
+    buttonFg: '247, 250, 252',
+    sidebarBg: '255, 255, 255',
     sidebarFg: '9, 9, 11',
-    sidebarTextActiveBorder: '59, 130, 246',
+    sidebarTextActiveBorder: '124, 58, 237',
     sidebarWhiteLogo: 'false',
 }
 
