@@ -104,6 +104,24 @@ const KanbanCard = (props: Props) => {
         // Track initial position
         dragStateRef.current.lastX = e.clientX
         
+        // Create an invisible 1x1 element to completely hide default drag ghost
+        const invisibleDiv = document.createElement('div')
+        invisibleDiv.style.cssText = 'position: absolute; width: 1px; height: 1px; opacity: 0;'
+        document.body.appendChild(invisibleDiv)
+        
+        // Set the invisible element as drag image to hide browser's ghost
+        if (e.dataTransfer) {
+            e.dataTransfer.effectAllowed = 'move'
+            e.dataTransfer.setDragImage(invisibleDiv, 0, 0)
+        }
+        
+        // Remove invisible element after a moment
+        setTimeout(() => {
+            if (invisibleDiv.parentElement) {
+                document.body.removeChild(invisibleDiv)
+            }
+        }, 0)
+        
         // Create floating element that follows cursor
         const floatingCard = cardRef.current.cloneNode(true) as HTMLElement
         floatingCard.id = 'drag-preview-floating'
@@ -123,13 +141,6 @@ const KanbanCard = (props: Props) => {
         
         document.body.appendChild(floatingCard)
         dragStateRef.current.floatingElement = floatingCard
-        
-        // Hide the default drag ghost completely by setting it far off-screen
-        if (e.dataTransfer) {
-            e.dataTransfer.effectAllowed = 'move'
-            // Use the card itself as drag image but offset it way off screen
-            e.dataTransfer.setDragImage(cardRef.current, -9999, -9999)
-        }
     }, [])
 
     // Update position and tilt based on drag direction
