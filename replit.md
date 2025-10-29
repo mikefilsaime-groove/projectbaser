@@ -66,19 +66,19 @@ Complete modernization from "Bootstrap 2010" look to contemporary ShadCN aesthet
   - Status: "Completed"→CheckCircle, "In Progress"→Play, "Blocked"→XCircle
   - Types: "Bug"→Bug, "Epic"→Mountain, "Feature"→Construction, "Task"→CheckSquare
   - 20+ intelligent pattern matches for automatic icon selection
-- Current bundle: `main.aa3ebfe5.js` with all Lucide icons, property badge icons, and enhanced drag animations
+- Current bundle: `main.e7fdf559.js` with all Lucide icons, property badge icons, and enhanced drag animations
 
 **Enhanced Drag-and-Drop Animations**
 Complete overhaul of kanban card drag UX for professional, intuitive feel:
-- **Custom Drag Preview**: Native HTML5 drag with tilted preview following cursor
-- **Tilt Effect**: 5-degree rotation on drag preview (modern Linear/Notion style)
+- **Directional Tilt**: Card dynamically tilts +5° when dragging right, -5° when dragging left
+- **Custom Floating Preview**: Hides default browser ghost, renders custom card that follows cursor
 - **Pop Effect**: 1.05x scale up so dragged card "lifts" off the board
 - **Enhanced Shadows**: Layered depth shadows (16px + 8px blur) on drag preview
 - **Smart Spacing**: Cards smoothly push apart with 48px margin to show drop zone
 - **Visual Drop Indicator**: Glowing blue pulsing line shows exactly where card will land
 - **Original Card Fades**: Source card becomes 30% opacity during drag for context
-- **Smooth Transitions**: Cubic-bezier spring animations (250ms) for natural feel
-- Implementation: `onDragStart` handler clones card, applies transforms, sets as `setDragImage()`
+- **Smooth Transitions**: 100ms transitions on rotation changes for fluid feel
+- Implementation: `onDragStart` creates floating element, `onDrag` updates position/rotation based on deltaX
 - All animations use hardware-accelerated transforms for 60fps performance
 - Files: `kanbanCard.tsx`, `kanbanCard.scss`, `sortable.tsx`
 

@@ -91,31 +91,67 @@ const KanbanCard = (props: Props) => {
         className += ' dragover'
     }
 
-    // Create custom drag preview with tilt effect
+    // Track drag direction for dynamic tilt
+    const dragStateRef = React.useRef<{
+        lastX: number
+        rotation: number
+        floatingElement: HTMLElement | null
+    }>({ lastX: 0, rotation: 0, floatingElement: null })
+
+    // Create custom floating drag preview with directional tilt
     const handleDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
         if (!cardRef.current) return
         
-        const target = e.currentTarget as HTMLDivElement
+        // Hide default drag ghost with transparent image
+        const emptyImage = document.createElement('img')
+        emptyImage.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+        e.dataTransfer.setDragImage(emptyImage, 0, 0)
         
-        // Create a clone of the card element for drag preview
-        const dragPreview = cardRef.current.cloneNode(true) as HTMLElement
-        dragPreview.style.position = 'absolute'
-        dragPreview.style.top = '-10000px'
-        dragPreview.style.transform = 'rotate(5deg) scale(1.05)'
-        dragPreview.style.boxShadow = 'rgba(0, 0, 0, 0.25) 0 16px 32px, rgba(0, 0, 0, 0.15) 0 8px 16px'
-        dragPreview.style.borderRadius = '8px'
-        dragPreview.style.opacity = '0.9'
-        dragPreview.style.pointerEvents = 'none'
+        // Track initial position
+        dragStateRef.current.lastX = e.clientX
+        dragStateRef.current.rotation = 0
         
-        document.body.appendChild(dragPreview)
+        // Create floating element that follows cursor
+        const floatingCard = cardRef.current.cloneNode(true) as HTMLElement
+        floatingCard.style.position = 'fixed'
+        floatingCard.style.left = `${e.clientX}px`
+        floatingCard.style.top = `${e.clientY}px`
+        floatingCard.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(1.05)'
+        floatingCard.style.boxShadow = 'rgba(0, 0, 0, 0.25) 0 16px 32px, rgba(0, 0, 0, 0.15) 0 8px 16px'
+        floatingCard.style.borderRadius = '8px'
+        floatingCard.style.opacity = '0.9'
+        floatingCard.style.pointerEvents = 'none'
+        floatingCard.style.zIndex = '10000'
+        floatingCard.style.transition = 'transform 100ms ease-out'
+        floatingCard.style.width = `${cardRef.current.offsetWidth}px`
         
-        // Set as drag image
-        e.dataTransfer.setDragImage(dragPreview, target.offsetWidth / 2, target.offsetHeight / 2)
+        document.body.appendChild(floatingCard)
+        dragStateRef.current.floatingElement = floatingCard
+    }, [])
+
+    // Update position and tilt based on drag direction
+    const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+        if (!dragStateRef.current.floatingElement || e.clientX === 0) return
         
-        // Clean up after drag starts
-        setTimeout(() => {
-            document.body.removeChild(dragPreview)
-        }, 0)
+        const deltaX = e.clientX - dragStateRef.current.lastX
+        dragStateRef.current.lastX = e.clientX
+        
+        // Determine rotation based on horizontal movement
+        dragStateRef.current.rotation = deltaX > 0 ? 5 : deltaX < 0 ? -5 : 0
+        
+        // Update position and rotation
+        dragStateRef.current.floatingElement.style.left = `${e.clientX}px`
+        dragStateRef.current.floatingElement.style.top = `${e.clientY}px`
+        dragStateRef.current.floatingElement.style.transform = 
+            `translate(-50%, -50%) rotate(${dragStateRef.current.rotation}deg) scale(1.05)`
+    }, [])
+
+    // Clean up on drag end
+    const handleDragEnd = useCallback(() => {
+        if (dragStateRef.current.floatingElement && dragStateRef.current.floatingElement.parentElement) {
+            document.body.removeChild(dragStateRef.current.floatingElement)
+            dragStateRef.current.floatingElement = null
+        }
     }, [])
 
     const [showConfirmationDialogBox, setShowConfirmationDialogBox] = useState<boolean>(false)
@@ -163,6 +199,8 @@ const KanbanCard = (props: Props) => {
                 className={`${className} ${isDragging ? 'is-dragging' : ''}`}
                 draggable={!props.readonly}
                 onDragStart={handleDragStart}
+                onDrag={handleDrag}
+                onDragEnd={handleDragEnd}
                 style={{
                     opacity: isDragging ? 0.3 : 1,
                     cursor: isDragging ? 'grabbing' : 'pointer',
