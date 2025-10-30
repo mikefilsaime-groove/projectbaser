@@ -1,0 +1,56 @@
+# BRAND = INSERT_BRAND_NAME
+
+---
+
+## Instruction
+Create a file named `INSERT_BRAND_NAME-context.md` in the `/docs` folder.  
+
+This file serves as a **knowledge base document** that provides AI systems, developers, and team members with essential context about **the brand** — what it does, who it’s for, and why it matters.  
+
+---
+
+## Overview
+Provide a concise summary of what **the brand** is and its core purpose. Describe what kind of application, platform, or service it provides, and the primary outcome it helps users achieve.
+
+---
+
+## Target Audience
+Explain who **the brand** is built for — including their roles, industries, goals, or key characteristics. Identify the main user personas who benefit most from the brand.
+
+---
+
+## Problems Solved
+List and describe the major pain points or challenges users face before using **the brand**. Focus on the frustrations, inefficiencies, or missed opportunities that the product addresses.
+
+---
+
+## Solution
+Explain how **the brand** solves these problems and improves workflows, productivity, or results. Include both the *functional* benefits (what it does) and the *emotional* or *strategic* benefits (why that matters).
+
+---
+
+## Features, Advantages & Benefits
+Detail the main features of **the brand** and describe:
+- The **advantage** each feature provides.  
+- The **benefit** to the user.  
+- The **benefit of the benefit** — the deeper outcome or transformation (e.g., more freedom, clarity, or growth).
+
+Use bullet points or short paragraphs for clarity.
+
+---
+
+## Competitor Landscape
+Identify key competitors or alternatives in the marketplace. Summarize how **the brand** compares to them — highlighting differentiation, positioning, or advantages that make it the superior choice.
+
+---
+
+## Unique Selling Proposition (USP)
+Define the core differentiator that makes **the brand** stand out. What is the “one thing” that makes it unique or better than anything else on the market?
+
+---
+
+## The Promise Land
+Describe the *ultimate transformation* that users experience when using **the brand**.  
+Paint a picture of what their life or work looks like “after” — when their problems are solved and their goals are achieved.  
+
+This section should capture the emotional and aspirational outcome that represents the true value of **the brand**.
