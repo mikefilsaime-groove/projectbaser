@@ -8,8 +8,21 @@ import {setCurrent as setCurrentView, getCurrentBoardViews} from '../../store/vi
 import {useAppSelector, useAppDispatch} from '../../store/hooks'
 import {UserSettings} from '../../userSettings'
 import {Utils} from '../../utils'
-import {getSidebarCategories} from '../../store/sidebar'
+import {CategoryBoards, getSidebarCategories} from '../../store/sidebar'
 import {Constants} from '../../constants'
+import {Board} from '../../blocks/board'
+
+export function getFirstAvailableBoardID(categories: CategoryBoards[], boards: {[key: string]: Board}): string | null {
+    for (const category of categories) {
+        for (const boardMetadata of category.boardMetadata) {
+            if (!boardMetadata.hidden && boards[boardMetadata.boardID]) {
+                return boardMetadata.boardID
+            }
+        }
+    }
+
+    return null
+}
 
 const TeamToBoardAndViewRedirect = (): null => {
     const boardId = useAppSelector(getCurrentBoardId)
@@ -28,23 +41,13 @@ const TeamToBoardAndViewRedirect = (): null => {
             boardID = UserSettings.lastBoardId[teamId]
 
             // if last visited board is unavailable, use the first board in categories list
+            if (boardID && !boards[boardID]) {
+                UserSettings.setLastBoardID(teamId, null)
+                boardID = ''
+            }
+
             if (!boardID && categories.length > 0) {
-                let goToBoardID: string | null = null
-
-                for (const category of categories) {
-                    for (const boardMetadata of category.boardMetadata) {
-                        // pick the first category board that exists and is not hidden
-                        if (!boardMetadata.hidden && boards[boardMetadata.boardID]) {
-                            goToBoardID = boardMetadata.boardID
-                            break
-                        }
-                    }
-                }
-
-                // there may even be no boards at all
-                if (goToBoardID) {
-                    boardID = goToBoardID
-                }
+                boardID = getFirstAvailableBoardID(categories, boards) || ''
             }
 
             if (boardID) {
@@ -80,7 +83,7 @@ const TeamToBoardAndViewRedirect = (): null => {
                 history.replace(newPath)
             }
         }
-    }, [teamId, match.params.boardId, match.params.viewId, categories.length, boardViews.length, boardId])
+    }, [teamId, match.params.boardId, match.params.viewId, categories.length, Object.keys(boards).length, boardViews.length, boardId])
 
     return null
 }
