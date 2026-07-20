@@ -1,0 +1,16 @@
+.ScalePlusAppLauncher {
+    display: none;
+    height: 38px;
+    margin: 0 16px 12px;
+
+    > div {
+        width: 0;
+        height: 38px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .ScalePlusAppLauncher {
+        display: block;
+    }
+}

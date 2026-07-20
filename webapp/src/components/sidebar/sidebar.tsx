@@ -50,6 +50,7 @@ import {Board} from '../../blocks/board'
 import SidebarCategory from './sidebarCategory'
 import SidebarSettingsMenu from './sidebarSettingsMenu'
 import SidebarUserMenu from './sidebarUserMenu'
+import ScalePlusAppLauncher from './scalePlusAppLauncher'
 
 type Props = {
     activeBoardId?: string
@@ -365,6 +366,8 @@ const Sidebar = (props: Props) => {
             {team && team.id !== Constants.globalTeamId &&
                 <div className='WorkspaceTitle'/>
             }
+
+            <ScalePlusAppLauncher/>
 
             <BoardsSwitcher/>
 
