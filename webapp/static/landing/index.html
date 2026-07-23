@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProjectBaser — Flexible Boards for Real Project Work</title>
-    <meta name="description" content="Plan work with boards and cards, switch the same project between Kanban, Table, Gallery, and Calendar views, and collaborate with comments, mentions, and permissions.">
+    <title>ProjectBaser — Project Management Across Four Board Views</title>
+    <meta name="description" content="Plan project work with cards and properties, then switch the same board between Kanban, Table, Gallery, and Calendar views.">
     <link rel="canonical" href="https://projectbaser.com/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="ProjectBaser">
-    <meta property="og:title" content="ProjectBaser — Flexible Boards for Real Project Work">
-    <meta property="og:description" content="One project, four useful views, and the collaboration controls to keep the work moving.">
+    <meta property="og:title" content="ProjectBaser — Project Management Across Four Board Views">
+    <meta property="og:description" content="Plan project work with cards and properties, then switch the same board between Kanban, Table, Gallery, and Calendar views.">
     <meta property="og:url" content="https://projectbaser.com/">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="ProjectBaser — Flexible Boards for Real Project Work">
-    <meta name="twitter:description" content="One project, four useful views, and the collaboration controls to keep the work moving.">
+    <meta name="twitter:title" content="ProjectBaser — Project Management Across Four Board Views">
+    <meta name="twitter:description" content="Plan project work with cards and properties, then switch the same board between Kanban, Table, Gallery, and Calendar views.">
     <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;550;600;650&display=swap" rel="stylesheet">
+    <link rel="preload" href="./fonts/geist-sans-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/geist-mono-variable.woff2" as="font" type="font/woff2" crossorigin>
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -30,6 +29,22 @@
         }
     </script>
     <style>
+        @font-face {
+            font-family: "ProjectBaser Geist";
+            src: url("./fonts/geist-sans-variable.woff2") format("woff2");
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "ProjectBaser Geist Mono";
+            src: url("./fonts/geist-mono-variable.woff2") format("woff2");
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+        }
+
         :root {
             color-scheme: light;
             --ink: #080808;
@@ -64,7 +79,7 @@
             overflow-x: hidden;
             background: var(--paper);
             color: var(--ink);
-            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: "ProjectBaser Geist", sans-serif;
             font-size: 17px;
             font-weight: 400;
             line-height: 1.55;
@@ -106,9 +121,9 @@
         h1,
         h2,
         h3 {
-            font-weight: 570;
-            letter-spacing: -0.05em;
-            line-height: 0.98;
+            font-weight: 630;
+            letter-spacing: -0.045em;
+            line-height: 1.02;
         }
 
         :focus-visible {
@@ -163,6 +178,13 @@
             grid-template-columns: 1fr auto 1fr;
         }
 
+        .brand-lockup {
+            display: flex;
+            width: fit-content;
+            align-items: center;
+            gap: 15px;
+        }
+
         .brand {
             display: inline-flex;
             width: fit-content;
@@ -211,12 +233,32 @@
         .brand small {
             margin-top: 5px;
             color: #77746c;
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 8px;
             font-weight: 600;
             letter-spacing: 0.11em;
             line-height: 1;
             text-transform: uppercase;
+        }
+
+        .family-endorsement {
+            display: inline-flex;
+            min-height: 44px;
+            align-items: center;
+            color: #77746c;
+            font-family: "ProjectBaser Geist Mono", monospace;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.035em;
+            text-decoration: none;
+        }
+
+        .family-endorsement:hover {
+            color: var(--ink);
+            text-decoration: underline;
+            text-decoration-color: var(--coral);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
         }
 
         .desktop-nav {
@@ -363,7 +405,7 @@
 
         .hero {
             position: relative;
-            padding: clamp(78px, 8vw, 124px) 0 96px;
+            padding: clamp(52px, 5vw, 72px) 0 72px;
             overflow: hidden;
             background:
                 radial-gradient(circle at 91% 8%, rgba(197, 176, 244, 0.34), transparent 29%),
@@ -385,8 +427,8 @@
             position: relative;
             display: grid;
             align-items: center;
-            gap: clamp(52px, 7vw, 104px);
-            grid-template-columns: minmax(0, 0.83fr) minmax(570px, 1.17fr);
+            gap: clamp(42px, 5vw, 72px);
+            grid-template-columns: minmax(0, 1fr) minmax(500px, 1fr);
         }
 
         .eyebrow {
@@ -394,7 +436,7 @@
             align-items: center;
             gap: 9px;
             margin-bottom: 27px;
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 11px;
             font-weight: 600;
             letter-spacing: 0.12em;
@@ -411,11 +453,11 @@
 
         .hero h1 {
             max-width: 720px;
-            margin-bottom: 28px;
-            font-size: clamp(64px, 6vw, 98px);
-            font-weight: 560;
-            letter-spacing: -0.065em;
-            line-height: 0.91;
+            margin-bottom: 22px;
+            font-size: clamp(54px, 5vw, 72px);
+            font-weight: 640;
+            letter-spacing: -0.055em;
+            line-height: 0.97;
         }
 
         .hero-lead {
@@ -429,7 +471,7 @@
 
         .hero-support {
             max-width: 590px;
-            margin-bottom: 32px;
+            margin-bottom: 26px;
             color: var(--muted);
             font-size: 17px;
         }
@@ -502,7 +544,7 @@
             border-radius: 999px;
             background: var(--lilac-soft);
             color: #64508c;
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 8px;
             font-weight: 600;
             letter-spacing: 0.07em;
@@ -546,7 +588,7 @@
         .side-label {
             margin: 12px 8px 5px;
             color: #777388;
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 7px;
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -969,7 +1011,7 @@
         .table-view tr:last-child td { border-bottom: 0; }
         .table-view th {
             background: #f7f6f3;
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 9px;
             font-weight: 600;
             letter-spacing: 0.06em;
@@ -1051,7 +1093,7 @@
         .calendar-day {
             padding: 9px;
             background: #f7f6f3;
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 8px;
             text-align: center;
             text-transform: uppercase;
@@ -1170,7 +1212,7 @@
             display: block;
             margin-bottom: 12px;
             color: #817d87;
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 8px;
             font-weight: 600;
             letter-spacing: 0.08em;
@@ -1284,7 +1326,7 @@
             border: 1px solid rgba(8, 8, 8, 0.2);
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.55);
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 8px;
             font-weight: 600;
             letter-spacing: 0.07em;
@@ -1428,7 +1470,7 @@
             display: block;
             margin-bottom: 55px;
             color: var(--coral);
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 10px;
             font-weight: 600;
         }
@@ -1511,7 +1553,11 @@
             max-width: 900px;
             margin: 0;
             font-size: clamp(54px, 7vw, 100px);
-            font-weight: 560;
+            font-weight: 630;
+        }
+
+        .closing .eyebrow {
+            margin-bottom: 20px;
         }
 
         .closing-copy p {
@@ -1523,6 +1569,17 @@
         .closing .button {
             background: var(--ink);
             color: #fff;
+        }
+
+        .closing-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .closing .button-secondary {
+            background: transparent;
+            color: var(--ink);
         }
 
         .site-footer {
@@ -1548,17 +1605,15 @@
         .site-footer .brand { color: #fff; }
         .site-footer .brand-mark { background: #fff; }
 
-        .site-footer nav,
-        .footer-note {
+        .site-footer nav {
             display: flex;
             flex-direction: column;
         }
 
-        .site-footer nav > strong,
-        .footer-note > strong {
+        .site-footer nav > strong {
             margin-bottom: 13px;
             color: #fff;
-            font-family: "IBM Plex Mono", monospace;
+            font-family: "ProjectBaser Geist Mono", monospace;
             font-size: 9px;
             font-weight: 600;
             letter-spacing: 0.1em;
@@ -1577,7 +1632,6 @@
         }
 
         .site-footer nav a:hover { color: #fff; }
-        .footer-note span { color: #aaa; font-size: 14px; line-height: 1.7; }
 
         .footer-bottom {
             display: flex;
@@ -1591,8 +1645,8 @@
         }
 
         @media (max-width: 1120px) {
-            .hero-grid { grid-template-columns: 0.83fr 1.17fr; gap: 48px; }
-            .hero h1 { font-size: clamp(58px, 6.7vw, 78px); }
+            .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(470px, 1fr); gap: 42px; }
+            .hero h1 { font-size: clamp(54px, 6vw, 68px); }
             .app-shell { min-height: 485px; grid-template-columns: 128px minmax(0, 1fr); }
             .app-main { padding: 21px 16px; }
             .task-card { min-height: 76px; padding: 8px; }
@@ -1650,21 +1704,24 @@
             .portability-step:last-child { border-bottom: 0; }
             .step-no { margin-bottom: 32px; }
             .footer-main { grid-template-columns: 1fr 1fr; }
-            .footer-brand,
-            .footer-note { grid-column: 1 / -1; }
+            .footer-brand { grid-column: 1 / -1; }
         }
 
         @media (max-width: 600px) {
             .wrap { width: min(100% - 24px, var(--wrap)); }
-            .header-inner { width: calc(100% - 24px); min-height: 68px; gap: 9px; }
+            .header-inner { width: calc(100% - 24px); min-height: 78px; gap: 9px; }
+            .brand-lockup { position: relative; min-height: 74px; align-items: flex-start; }
+            .family-endorsement { position: absolute; top: 31px; left: 48px; }
             .header-actions .button-small { display: none; }
-            .hero { padding: 60px 0 72px; }
+            .hero { padding: 42px 0 60px; }
             .eyebrow { margin-bottom: 21px; font-size: 9px; }
-            .hero h1 { margin-bottom: 24px; font-size: clamp(47px, 14.4vw, 64px); line-height: 0.94; }
+            .hero h1 { margin-bottom: 20px; font-size: clamp(42px, 11vw, 50px); line-height: 0.97; }
             .hero-lead { font-size: 20px; }
             .hero-support { font-size: 16px; }
             .hero-actions { flex-direction: column; }
             .hero-actions .button { width: 100%; }
+            .closing-actions { flex-direction: column; }
+            .closing-actions .button { width: 100%; }
             .hero-grid { gap: 54px; }
             .app-window { border-radius: 16px; box-shadow: 9px 12px 0 rgba(27, 25, 40, 0.1), 0 20px 40px rgba(35, 28, 64, 0.14); transform: none; }
             .window-bar { height: 42px; padding: 0 12px; }
@@ -1717,6 +1774,8 @@
             html { scroll-behavior: auto; }
             *, *::before, *::after {
                 scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
         }
@@ -1727,10 +1786,13 @@
 
     <header class="site-header">
         <div class="header-inner">
-            <a class="brand" href="#top" aria-label="ProjectBaser home">
-                <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-                <span><strong>ProjectBaser</strong><small>Part of Scale.gg</small></span>
-            </a>
+            <div class="brand-lockup">
+                <a class="brand" href="#top" aria-label="ProjectBaser home">
+                    <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+                    <span><strong>ProjectBaser</strong></span>
+                </a>
+                <a class="family-endorsement" href="https://scale.gg/">Part of Scale.gg →</a>
+            </div>
 
             <nav class="desktop-nav" aria-label="Primary navigation">
                 <a href="#views">Views</a>
@@ -1762,7 +1824,7 @@
             <div class="wrap hero-grid">
                 <div class="hero-copy">
                     <span class="eyebrow">Boards that change with the work</span>
-                    <h1>The project changes. Your board should keep up.</h1>
+                    <h1>Project management software with four connected board views.</h1>
                     <p class="hero-lead">Build the work from cards and properties, then see the same project as a Kanban board, table, gallery, or calendar.</p>
                     <p class="hero-support">ProjectBaser keeps plans, owners, dates, comments, and decisions connected—without forcing every teammate into the same view.</p>
                     <div class="hero-actions">
@@ -1775,7 +1837,7 @@
                 </div>
 
                 <div class="hero-visual">
-                    <div class="app-window" aria-label="Illustration of a ProjectBaser project board">
+                    <div class="app-window" aria-hidden="true">
                         <div class="window-bar">
                             <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
                             <strong>ProjectBaser · Product Launch</strong>
@@ -1910,7 +1972,7 @@
                     </ul>
                 </div>
 
-                <div class="card-detail" aria-label="Illustration of a ProjectBaser card with custom properties and comments">
+                <div class="card-detail" aria-hidden="true">
                     <div class="card-detail-bar"><b>Product Launch / Review</b><span>Card details</span></div>
                     <div class="card-detail-body">
                         <div class="card-copy">
@@ -1963,7 +2025,7 @@
 
         <section class="section section-lilac" id="collaboration">
             <div class="wrap collab-layout">
-                <div class="share-workspace" aria-label="Illustration of ProjectBaser sharing permissions and live activity">
+                <div class="share-workspace" aria-hidden="true">
                     <div class="share-card">
                         <div class="share-card-head"><h3>Share “Product Launch”</h3><span>Board access</span></div>
                         <div class="permission-row"><i>MF</i><div><b>Mia Flores</b><small>mia@example.com</small></div><span>Admin</span></div>
@@ -2025,12 +2087,18 @@
 
         <section class="closing">
             <div class="wrap closing-inner">
-                <h2>Give the project structure without making the structure the project.</h2>
+                <div>
+                    <span class="eyebrow">THE SCALE.GG FAMILY</span>
+                    <h2>One membership. A focused app for every marketing job.</h2>
+                </div>
                 <div class="closing-copy">
-                    <p>Start with a board, shape the properties around the work, and let each teammate use the view that makes the project easiest to understand.</p>
-                    <a class="button" href="/login">Open ProjectBaser
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-                    </a>
+                    <p>ProjectBaser is included in Scale.gg—the AI-powered marketing suite for planning, creating, publishing, selling, and supporting your business.</p>
+                    <div class="closing-actions">
+                        <a class="button" href="https://scale.gg/">Explore Scale.gg
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                        </a>
+                        <a class="button button-secondary" href="https://app.scaleplus.gg/apps">See all apps</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2042,7 +2110,7 @@
                 <div class="footer-brand">
                     <a class="brand" href="#top" aria-label="ProjectBaser home">
                         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-                        <span><strong>ProjectBaser</strong><small>Part of Scale.gg</small></span>
+                        <span><strong>ProjectBaser</strong></span>
                     </a>
                     <p>Flexible boards, connected cards, alternative views, and practical collaboration controls for project work.</p>
                 </div>
@@ -2059,9 +2127,15 @@
                     <a href="/login">Open ProjectBaser</a>
                     <a href="https://scale.gg/projectbaser/">Scale.gg overview</a>
                 </nav>
-                <div class="footer-note"><strong>Scale.gg family</strong><span>Available now.<br>Included in Scale.gg Pro.</span></div>
+                <nav aria-label="Scale.gg family links">
+                    <strong>Scale.gg family</strong>
+                    <a href="https://scale.gg/">Scale.gg</a>
+                    <a href="https://app.scaleplus.gg/apps">Explore all apps</a>
+                    <a href="https://scale.gg/pricing/">Pricing</a>
+                    <a href="https://app.scaleplus.gg/">Sign in</a>
+                </nav>
             </div>
-            <div class="footer-bottom"><span>© 2026 ProjectBaser</span><span>Boards and cards stay under your team’s control.</span></div>
+            <div class="footer-bottom"><span>© 2026 ProjectBaser — A Scale.gg product</span><span>Boards and cards stay under your team’s control.</span></div>
         </div>
     </footer>
 
@@ -2074,6 +2148,7 @@
             menuButton.setAttribute('aria-expanded', String(!open));
             menuButton.setAttribute('aria-label', open ? 'Open navigation' : 'Close navigation');
             mobileNavigation.hidden = open;
+            if (!open) mobileNavigation.querySelector('a').focus();
         });
 
         mobileNavigation.querySelectorAll('a').forEach((link) => {
@@ -2082,6 +2157,14 @@
                 menuButton.setAttribute('aria-label', 'Open navigation');
                 mobileNavigation.hidden = true;
             });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape' || menuButton.getAttribute('aria-expanded') !== 'true') return;
+            menuButton.setAttribute('aria-expanded', 'false');
+            menuButton.setAttribute('aria-label', 'Open navigation');
+            mobileNavigation.hidden = true;
+            menuButton.focus();
         });
 
         const viewTabs = Array.from(document.querySelectorAll('.view-tab'));
