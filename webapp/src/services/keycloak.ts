@@ -1,7 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import Keycloak, {KeycloakConfig, KeycloakInitOptions} from 'keycloak-js'
+// TypeScript 4.6 cannot resolve the export-only Keycloak 26 package root.
+// The explicit ESM entry preserves the official adapter while keeping this legacy build compatible.
+import Keycloak, {KeycloakConfig, KeycloakInitOptions} from '../../node_modules/keycloak-js/lib/keycloak.js'
 
 // Keycloak configuration from environment variables or defaults
 const keycloakConfig: KeycloakConfig = {
@@ -208,4 +210,3 @@ export const getKeycloakInstance = (): Keycloak => {
 }
 
 export default keycloak
-
