@@ -6,20 +6,31 @@ import {createAsyncThunk, createSelector} from '@reduxjs/toolkit'
 import {default as client} from '../octoClient'
 import {Subscription} from '../wsclient'
 import {ErrorId} from '../errors'
+import {UserSettings} from '../userSettings'
+import {Board} from '../blocks/board'
 
 import {RootState} from './index'
+
+function setActiveTeam(teamID: string): void {
+    client.teamId = teamID
+    localStorage.setItem('focalboardTeamId', teamID)
+    UserSettings.setLastTeamID(teamID)
+}
+
+function clearActiveTeam(): void {
+    localStorage.removeItem('focalboardTeamId')
+    UserSettings.setLastTeamID(null)
+}
 
 export const initialLoad = createAsyncThunk(
     'initialLoad',
     async () => {
-        const [me, myConfig, team, teams, boards, boardsMemberships, boardTemplates, limits] = await Promise.all([
+        const [me, myConfig, requestedTeam, teams, boardsMemberships, limits] = await Promise.all([
             client.getMe(),
             client.getMyConfig(),
             client.getTeam(),
             client.getTeams(),
-            client.getBoards(),
             client.getMyBoardMemberships(),
-            client.getTeamTemplates(),
             client.getBoardsCloudLimits(),
         ])
 
@@ -28,14 +39,35 @@ export const initialLoad = createAsyncThunk(
             throw new Error(ErrorId.NotLoggedIn)
         }
 
+        let team = requestedTeam
+        let boards: Board[] | null = null
+        if (!team && teams.length > 0) {
+            const candidateTeams = await Promise.all(teams.map(async (candidateTeam) => ({
+                boards: await client.getBoards(candidateTeam.id),
+                team: candidateTeam,
+            })))
+            const teamWithBoards = candidateTeams.find((candidateTeam) => candidateTeam.boards.length > 0)
+            team = teamWithBoards?.team || teams[0]
+            boards = teamWithBoards?.boards || null
+        }
+
         // if no team, either bad id, or user doesn't have access
         if (!team) {
+            clearActiveTeam()
             throw new Error(ErrorId.TeamUndefined)
         }
+
+        setActiveTeam(team.id)
+
+        const [loadedBoards, boardTemplates] = await Promise.all([
+            boards || client.getBoards(team.id),
+            client.getTeamTemplates(team.id),
+        ])
+
         return {
             team,
             teams,
-            boards,
+            boards: loadedBoards,
             boardsMemberships,
             boardTemplates,
             limits,

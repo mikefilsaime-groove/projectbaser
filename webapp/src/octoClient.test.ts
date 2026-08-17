@@ -44,6 +44,7 @@ test('OctoClient: get blocks', async () => {
 test('OctoClient: insert blocks', async () => {
     const blocks = createBlocks()
 
+    FetchMock.fn.mockReturnValueOnce(FetchMock.jsonResponse(JSON.stringify({})))
     await octoClient.insertBlocks('board-id', blocks)
 
     expect(FetchMock.fn).toBeCalledTimes(1)
@@ -58,6 +59,7 @@ test('OctoClient: insert blocks', async () => {
 test('OctoClient: importFullArchive', async () => {
     const archive = new File([''], 'test')
 
+    FetchMock.fn.mockReturnValueOnce(FetchMock.jsonResponse(JSON.stringify({})))
     await octoClient.importFullArchive(archive)
 
     expect(FetchMock.fn).toBeCalledTimes(1)

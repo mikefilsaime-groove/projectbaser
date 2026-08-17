@@ -89,6 +89,7 @@ const BoardPage = (props: Props): JSX.Element => {
     // TODO: Make this less brittle. This only works because this is the root render function
     useEffect(() => {
         UserSettings.lastTeamId = teamId
+        localStorage.setItem('focalboardTeamId', teamId)
         octoClient.teamId = teamId
         dispatch(setTeam(teamId))
     }, [teamId])

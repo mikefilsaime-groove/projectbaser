@@ -51,6 +51,7 @@ function errorDefFromId(id: ErrorId | null): ErrorDef {
         errDef.button1Enabled = true
         errDef.button1Text = intl.formatMessage({id: 'error.back-to-home', defaultMessage: 'Back to Home'})
         errDef.button1Redirect = (): string => {
+            localStorage.removeItem('focalboardTeamId')
             UserSettings.setLastTeamID(null)
             return window.location.origin
         }

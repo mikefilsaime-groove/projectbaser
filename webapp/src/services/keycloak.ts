@@ -3,6 +3,8 @@
 
 import Keycloak, {KeycloakConfig, KeycloakInitOptions} from 'keycloak-js'
 
+import {UserSettings} from '../userSettings'
+
 // Keycloak configuration from environment variables or defaults
 const keycloakConfig: KeycloakConfig = {
     url: (window as any).KEYCLOAK_BASE_URL || 'https://auth.groovetech.io/auth',
@@ -69,6 +71,7 @@ export const keycloakLogout = (): void => {
     // Clear local storage
     localStorage.removeItem('focalboardSessionId')
     localStorage.removeItem('focalboardTeamId')
+    UserSettings.setLastTeamID(null)
 
     // Redirect to ScalePlus logout (will redirect back to projectbaser after logout)
     const redirectUrl = encodeURIComponent(window.location.origin)
@@ -208,4 +211,3 @@ export const getKeycloakInstance = (): Keycloak => {
 }
 
 export default keycloak
-

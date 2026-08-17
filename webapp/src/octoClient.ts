@@ -83,6 +83,7 @@ class OctoClient {
         // Clear all session data
         localStorage.removeItem('focalboardSessionId')
         localStorage.removeItem('focalboardTeamId')
+        UserSettings.setLastTeamID(null)
 
         // Redirect to Keycloak logout which will then redirect to login
         const redirectUrl = encodeURIComponent(window.location.origin)
@@ -145,7 +146,7 @@ class OctoClient {
     async keycloakLogin(keycloakToken: string): Promise<{token: string, user: IUser, teamId: string} | null> {
         // Clear any existing session token before Keycloak login
         localStorage.removeItem('focalboardSessionId')
-        
+
         const path = '/api/v2/auth/keycloak-token-login'
         const response = await fetch(this.getBaseURL() + path, {
             method: 'POST',
@@ -169,6 +170,8 @@ class OctoClient {
             localStorage.setItem('focalboardSessionId', responseJson.token)
             if (responseJson.teamId) {
                 localStorage.setItem('focalboardTeamId', responseJson.teamId)
+                UserSettings.setLastTeamID(responseJson.teamId)
+                this.teamId = responseJson.teamId
             }
             return {
                 token: responseJson.token,
@@ -230,7 +233,8 @@ class OctoClient {
     private teamPath(teamId?: string): string {
         let teamIdToUse = teamId
         if (!teamId) {
-            teamIdToUse = this.teamId === Constants.globalTeamId ? UserSettings.lastTeamId || this.teamId : this.teamId
+            const storedTeamId = localStorage.getItem('focalboardTeamId') || UserSettings.lastTeamId
+            teamIdToUse = this.teamId === Constants.globalTeamId ? storedTeamId || this.teamId : this.teamId
         }
 
         return `/api/v2/teams/${teamIdToUse}`
@@ -819,8 +823,8 @@ class OctoClient {
         return this.getBoardsWithPath(path)
     }
 
-    async getBoards(): Promise<Board[]> {
-        const path = this.teamPath() + '/boards'
+    async getBoards(teamId?: string): Promise<Board[]> {
+        const path = this.teamPath(teamId) + '/boards'
         return this.getBoardsWithPath(path)
     }
 

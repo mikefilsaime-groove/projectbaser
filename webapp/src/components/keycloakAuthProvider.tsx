@@ -17,6 +17,7 @@ import client from '../octoClient'
 import {useAppDispatch} from '../store/hooks'
 import {setMe} from '../store/users'
 import {IUser} from '../user'
+import {UserSettings} from '../userSettings'
 
 // Required role for accessing this application
 const REQUIRED_ROLE = 'app_pipeleads'
@@ -59,6 +60,7 @@ export const KeycloakAuthProvider: React.FC<KeycloakAuthProviderProps> = ({child
                     localStorage.setItem('focalboardSessionId', response.token)
                     if (response.teamId) {
                         localStorage.setItem('focalboardTeamId', response.teamId)
+                        UserSettings.setLastTeamID(response.teamId)
                     }
 
                     // Update Redux store with user data
@@ -75,7 +77,7 @@ export const KeycloakAuthProvider: React.FC<KeycloakAuthProviderProps> = ({child
 
         const initAuth = async () => {
             if (!isMounted) return
-            
+
             setIsLoading(true)
 
             try {
@@ -98,7 +100,7 @@ export const KeycloakAuthProvider: React.FC<KeycloakAuthProviderProps> = ({child
                     if (token) {
                         const loggedInUser = await handleBackendLogin(token)
                         if (!isMounted) return
-                        
+
                         if (loggedInUser) {
                             setUser(loggedInUser)
                             setIsAuthenticated(true)
@@ -246,4 +248,3 @@ export const withKeycloakAuth = <P extends object>(
 }
 
 export default KeycloakAuthProvider
-
