@@ -3,6 +3,9 @@
 
 import React, {useEffect} from 'react'
 
+import client from '../../octoClient'
+import {ScaleWorkspaceDisplayContext, isScaleWorkspaceFeatureEnabled} from '../../scaleWorkspace'
+
 import './scalePlusAppLauncher.scss'
 
 const SCRIPT_ID = 'scaleplus-app-launcher-script'
@@ -19,6 +22,15 @@ type LauncherApi = {
         anchorAlign: 'start'
         navigation: 'direct'
         target: '_self'
+
+        // Sanitized, display-only Scale Plus team-workspace fields.
+        // Never used for authorization.
+        workspaceType?: 'personal' | 'guest'
+        workspaceName?: string
+        workspaceOwnerName?: string
+        workspaceOwnerEmail?: string
+        workspaceSwitchUrl?: string
+        allowedApps?: string[]
     }) => LauncherInstance
 }
 
@@ -31,6 +43,8 @@ declare global {
 const ScalePlusAppLauncher = (): JSX.Element => {
     useEffect(() => {
         let launcher: LauncherInstance | undefined
+        let workspaceContext: ScaleWorkspaceDisplayContext | null = null
+        let disposed = false
 
         const canMount = () => window.matchMedia('(min-width: 1024px)').matches && !document.querySelector(OPEN_MODAL_SELECTOR)
         const destroy = () => {
@@ -41,6 +55,7 @@ const ScalePlusAppLauncher = (): JSX.Element => {
             if (!canMount() || launcher || !window.ScalePlusAppLauncher) {
                 return
             }
+            const guest = workspaceContext && workspaceContext.workspaceType === 'guest' ? workspaceContext : null
             launcher = window.ScalePlusAppLauncher.mount({
                 currentApp: 'projectbaser',
                 anchor: ANCHOR_SELECTOR,
@@ -48,6 +63,14 @@ const ScalePlusAppLauncher = (): JSX.Element => {
                 anchorAlign: 'start',
                 navigation: 'direct',
                 target: '_self',
+                ...(guest ? {
+                    workspaceType: 'guest' as const,
+                    workspaceName: guest.workspaceName,
+                    workspaceOwnerName: guest.workspaceOwnerName,
+                    workspaceOwnerEmail: guest.workspaceOwnerEmail,
+                    workspaceSwitchUrl: guest.workspaceSwitchUrl,
+                    allowedApps: guest.allowedApplications,
+                } : {}),
             })
         }
         const refresh = () => {
@@ -56,6 +79,20 @@ const ScalePlusAppLauncher = (): JSX.Element => {
             } else {
                 destroy()
             }
+        }
+
+        // Display-only: when the team-workspace adapter is enabled, show the
+        // active guest workspace in the launcher. No-op while the feature
+        // flag is off.
+        if (isScaleWorkspaceFeatureEnabled()) {
+            client.getScaleWorkspaceDisplayContext().then((context) => {
+                if (disposed || !context || context.workspaceType !== 'guest') {
+                    return
+                }
+                workspaceContext = context
+                destroy()
+                refresh()
+            }).catch(() => undefined)
         }
 
         const script = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null
@@ -86,6 +123,7 @@ const ScalePlusAppLauncher = (): JSX.Element => {
         mediaQuery.addEventListener('change', refresh)
 
         return () => {
+            disposed = true
             observer.disconnect()
             mediaQuery.removeEventListener('change', refresh)
             destroy()

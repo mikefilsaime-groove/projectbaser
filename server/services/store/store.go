@@ -81,6 +81,10 @@ type Store interface {
         UpsertSharing(sharing model.Sharing) error
         GetSharing(rootID string) (*model.Sharing, error)
 
+        GetScaleWorkspaceBinding(workspaceID string) (*model.ScaleWorkspaceBinding, error)
+        UpsertScaleWorkspaceBinding(binding *model.ScaleWorkspaceBinding) error
+        CreateScaleWorkspaceAuditEvent(event *model.ScaleWorkspaceAuditEvent) error
+
         UpsertTeamSignupToken(team model.Team) error
         UpsertTeamSettings(team model.Team) error
         GetTeam(ID string) (*model.Team, error)

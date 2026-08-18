@@ -18,6 +18,13 @@ import {Constants} from './constants'
 import {BoardsCloudLimits} from './boardsCloudLimits'
 import {TopBoardResponse} from './insights'
 import {BoardSiteStatistics} from './statistics'
+import {getKeycloakToken} from './services/keycloak'
+import {
+    ScaleWorkspaceDisplayContext,
+    ScaleWorkspaceExchangeResult,
+    isScaleWorkspaceFeatureEnabled,
+    setScaleWorkspaceFeatureEnabled,
+} from './scaleWorkspace'
 
 // Global flag to prevent multiple simultaneous auth redirects
 let isRedirectingToAuth = false
@@ -194,7 +201,54 @@ class OctoClient {
         }
 
         const json = (await this.getJson(response, {})) as ClientConfig
+
+        // Keep the client-side team-workspace gate in sync with the server
+        // flag (display/boot gating only, never authorization).
+        setScaleWorkspaceFeatureEnabled(json.scaleTeamWorkspaces === true)
+
         return json
+    }
+
+    // Exchanges a single-use Scale Plus workspace launch code server-side.
+    // The server verifies the signed-in Keycloak subject before storing the
+    // guest context in its own session; nothing is stored client-side.
+    async exchangeScaleWorkspace(code: string): Promise<ScaleWorkspaceExchangeResult | null> {
+        const path = '/api/v2/scale-workspace/exchange'
+        const response = await fetch(this.getBaseURL() + path, {
+            method: 'POST',
+            headers: this.headers(),
+            body: JSON.stringify({code}),
+        })
+        if (response.status !== 200) {
+            return null
+        }
+        return (await this.getJson(response, null)) as ScaleWorkspaceExchangeResult | null
+    }
+
+    // Sanitized display-only workspace fields for the launcher UI.
+    async getScaleWorkspaceDisplayContext(): Promise<ScaleWorkspaceDisplayContext | null> {
+        const path = '/api/v2/scale-workspace/display-context'
+        const response = await this.fetchWithAuthCheck(this.getBaseURL() + path, {
+            method: 'GET',
+            headers: this.headers(),
+        })
+        if (response.status !== 200) {
+            return null
+        }
+        return (await this.getJson(response, null)) as ScaleWorkspaceDisplayContext | null
+    }
+
+    // Leaves the guest workspace and restores the member's own team.
+    async leaveScaleWorkspace(): Promise<{teamId: string} | null> {
+        const path = '/api/v2/scale-workspace/leave'
+        const response = await fetch(this.getBaseURL() + path, {
+            method: 'POST',
+            headers: this.headers(),
+        })
+        if (response.status !== 200) {
+            return null
+        }
+        return (await this.getJson(response, null)) as {teamId: string} | null
     }
 
     async register(email: string, username: string, password: string, token?: string): Promise<{code: number, json: {error?: string}}> {
@@ -222,12 +276,25 @@ class OctoClient {
     }
 
     private headers() {
-        return {
+        const headers: Record<string, string> = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: this.token ? 'Bearer ' + this.token : '',
             'X-Requested-With': 'XMLHttpRequest',
         }
+
+        // Guest team-workspace requests are revalidated centrally on every
+        // call and need the actor's CURRENT Keycloak access token. Sent only
+        // while the server-side adapter flag is on; read transiently, never
+        // persisted by the server.
+        if (isScaleWorkspaceFeatureEnabled()) {
+            const keycloakToken = getKeycloakToken()
+            if (keycloakToken) {
+                headers['X-Scale-Keycloak-Token'] = keycloakToken
+            }
+        }
+
+        return headers
     }
 
     private teamPath(teamId?: string): string {

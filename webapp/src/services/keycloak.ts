@@ -50,10 +50,14 @@ export const initKeycloak = async (): Promise<boolean> => {
 
 /**
  * Login via Keycloak - redirects to Keycloak login page
+ * @param redirectPath Optional local absolute path to return to after login
+ * (used to carry a Scale Plus workspace launch code through sign-in without
+ * ever persisting it)
  */
-export const keycloakLogin = (): void => {
+export const keycloakLogin = (redirectPath?: string): void => {
+    const safePath = redirectPath && redirectPath.startsWith('/') && !redirectPath.startsWith('//') ? redirectPath : '/'
     keycloak.login({
-        redirectUri: window.location.origin + '/',
+        redirectUri: window.location.origin + safePath,
     })
 }
 

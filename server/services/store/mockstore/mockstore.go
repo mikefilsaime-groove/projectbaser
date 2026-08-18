@@ -124,6 +124,108 @@ func (mr *MockStoreMockRecorder) CreateCategory(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCategory", reflect.TypeOf((*MockStore)(nil).CreateCategory), arg0)
 }
 
+// AddUserToTeam mocks base method.
+func (m *MockStore) AddUserToTeam(arg0, arg1, arg2 string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddUserToTeam", arg0, arg1, arg2)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AddUserToTeam indicates an expected call of AddUserToTeam.
+func (mr *MockStoreMockRecorder) AddUserToTeam(arg0, arg1, arg2 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddUserToTeam", reflect.TypeOf((*MockStore)(nil).AddUserToTeam), arg0, arg1, arg2)
+}
+
+// CreateTeam mocks base method.
+func (m *MockStore) CreateTeam(arg0 *model.Team) (*model.Team, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateTeam", arg0)
+	ret0, _ := ret[0].(*model.Team)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateTeam indicates an expected call of CreateTeam.
+func (mr *MockStoreMockRecorder) CreateTeam(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTeam", reflect.TypeOf((*MockStore)(nil).CreateTeam), arg0)
+}
+
+// GetPrimaryTeamForUser mocks base method.
+func (m *MockStore) GetPrimaryTeamForUser(arg0 string) (*model.Team, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPrimaryTeamForUser", arg0)
+	ret0, _ := ret[0].(*model.Team)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPrimaryTeamForUser indicates an expected call of GetPrimaryTeamForUser.
+func (mr *MockStoreMockRecorder) GetPrimaryTeamForUser(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPrimaryTeamForUser", reflect.TypeOf((*MockStore)(nil).GetPrimaryTeamForUser), arg0)
+}
+
+// GetUserTeamRole mocks base method.
+func (m *MockStore) GetUserTeamRole(arg0, arg1 string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserTeamRole", arg0, arg1)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserTeamRole indicates an expected call of GetUserTeamRole.
+func (mr *MockStoreMockRecorder) GetUserTeamRole(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserTeamRole", reflect.TypeOf((*MockStore)(nil).GetUserTeamRole), arg0, arg1)
+}
+
+// CreateScaleWorkspaceAuditEvent mocks base method.
+func (m *MockStore) CreateScaleWorkspaceAuditEvent(arg0 *model.ScaleWorkspaceAuditEvent) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateScaleWorkspaceAuditEvent", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateScaleWorkspaceAuditEvent indicates an expected call of CreateScaleWorkspaceAuditEvent.
+func (mr *MockStoreMockRecorder) CreateScaleWorkspaceAuditEvent(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateScaleWorkspaceAuditEvent", reflect.TypeOf((*MockStore)(nil).CreateScaleWorkspaceAuditEvent), arg0)
+}
+
+// GetScaleWorkspaceBinding mocks base method.
+func (m *MockStore) GetScaleWorkspaceBinding(arg0 string) (*model.ScaleWorkspaceBinding, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetScaleWorkspaceBinding", arg0)
+	ret0, _ := ret[0].(*model.ScaleWorkspaceBinding)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetScaleWorkspaceBinding indicates an expected call of GetScaleWorkspaceBinding.
+func (mr *MockStoreMockRecorder) GetScaleWorkspaceBinding(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetScaleWorkspaceBinding", reflect.TypeOf((*MockStore)(nil).GetScaleWorkspaceBinding), arg0)
+}
+
+// UpsertScaleWorkspaceBinding mocks base method.
+func (m *MockStore) UpsertScaleWorkspaceBinding(arg0 *model.ScaleWorkspaceBinding) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpsertScaleWorkspaceBinding", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpsertScaleWorkspaceBinding indicates an expected call of UpsertScaleWorkspaceBinding.
+func (mr *MockStoreMockRecorder) UpsertScaleWorkspaceBinding(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpsertScaleWorkspaceBinding", reflect.TypeOf((*MockStore)(nil).UpsertScaleWorkspaceBinding), arg0)
+}
+
 // CreateSession mocks base method.
 func (m *MockStore) CreateSession(arg0 *model.Session) error {
 	m.ctrl.T.Helper()

@@ -65,6 +65,9 @@ func (a *API) RegisterRoutes(r *mux.Router) {
         apiv2 := r.PathPrefix("/api/v2").Subrouter()
         apiv2.Use(a.panicHandler)
         apiv2.Use(a.requireCSRFToken)
+        // Scale Plus team workspace guest boundary (no-op unless
+        // SCALE_TEAM_WORKSPACES_ENABLED=true and a guest context is active).
+        apiv2.Use(a.scaleWorkspaceGuard)
 
         /* ToDo:
         apiv3 := r.PathPrefix("/api/v3").Subrouter()
@@ -76,6 +79,7 @@ func (a *API) RegisterRoutes(r *mux.Router) {
 	a.registerUsersRoutes(apiv2)
 	a.registerAuthRoutes(apiv2)
 	a.registerKeycloakAuthRoutes(apiv2)
+	a.registerScaleWorkspaceRoutes(apiv2)
         a.registerMembersRoutes(apiv2)
         a.registerCategoriesRoutes(apiv2)
         a.registerSharingRoutes(apiv2)
@@ -100,6 +104,10 @@ func (a *API) RegisterRoutes(r *mux.Router) {
 
         // System routes are outside the /api/v2 path
         a.registerSystemRoutes(r)
+
+        // Scale Plus team workspace browser callback (outside /api/v2;
+        // returns 404 unless the adapter flag is enabled)
+        a.registerScaleWorkspacePublicRoutes(r)
 }
 
 func (a *API) RegisterAdminRoutes(r *mux.Router) {

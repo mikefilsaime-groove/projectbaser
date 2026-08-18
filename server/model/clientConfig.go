@@ -26,4 +26,9 @@ type ClientConfig struct {
 	// Required for file upload to check the size of the file
 	// required: true
 	MaxFileSize int64 `json:"maxFileSize"`
+
+	// Is the Scale Plus team workspaces adapter enabled (display/boot
+	// gating only, never authorization)
+	// required: true
+	ScaleTeamWorkspaces bool `json:"scaleTeamWorkspaces"`
 }

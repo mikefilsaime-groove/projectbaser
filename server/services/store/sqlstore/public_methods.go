@@ -133,6 +133,11 @@ func (s *SQLStore) CreateSession(session *model.Session) error {
 
 }
 
+func (s *SQLStore) CreateScaleWorkspaceAuditEvent(event *model.ScaleWorkspaceAuditEvent) error {
+	return s.createScaleWorkspaceAuditEvent(s.db, event)
+
+}
+
 func (s *SQLStore) CreateSubscription(sub *model.Subscription) (*model.Subscription, error) {
         return s.createSubscription(s.db, sub)
 
@@ -470,6 +475,11 @@ func (s *SQLStore) GetNotificationHint(blockID string) (*model.NotificationHint,
 
 func (s *SQLStore) GetRegisteredUserCount() (int, error) {
         return s.getRegisteredUserCount(s.db)
+
+}
+
+func (s *SQLStore) GetScaleWorkspaceBinding(workspaceID string) (*model.ScaleWorkspaceBinding, error) {
+	return s.getScaleWorkspaceBinding(s.db, workspaceID)
 
 }
 
@@ -970,6 +980,11 @@ func (s *SQLStore) UpdateUserPasswordByID(userID string, password string) error 
 
 func (s *SQLStore) UpsertNotificationHint(hint *model.NotificationHint, notificationFreq time.Duration) (*model.NotificationHint, error) {
         return s.upsertNotificationHint(s.db, hint, notificationFreq)
+
+}
+
+func (s *SQLStore) UpsertScaleWorkspaceBinding(binding *model.ScaleWorkspaceBinding) error {
+	return s.upsertScaleWorkspaceBinding(s.db, binding)
 
 }
 
