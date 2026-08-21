@@ -20,10 +20,10 @@ import {IUser} from '../user'
 import {UserSettings} from '../userSettings'
 
 // Required role for accessing this application
-const REQUIRED_ROLE = 'app_pipeleads'
+const REQUIRED_ROLE = 'app_projectbaser'
 
 // Access denied redirect URL
-const ACCESS_DENIED_URL = 'https://app.scaleplus.gg/dashboard?error=access_denied&app=pipeleads'
+const ACCESS_DENIED_URL = 'https://app.scaleplus.gg/dashboard?error=access_denied&app=projectbaser'
 
 interface KeycloakAuthContextType {
     isAuthenticated: boolean
