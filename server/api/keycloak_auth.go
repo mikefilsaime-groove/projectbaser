@@ -13,6 +13,8 @@ import (
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
 )
 
+const requiredKeycloakRole = "app_projectbaser"
+
 // KeycloakTokenClaims represents the decoded JWT claims from Keycloak
 type KeycloakTokenClaims struct {
 	Sub               string                 `json:"sub"`
@@ -108,8 +110,8 @@ func (a *API) handleKeycloakTokenLogin(w http.ResponseWriter, r *http.Request) {
 	auditRec.AddMeta("email", claims.Email)
 	auditRec.AddMeta("keycloak_sub", claims.Sub)
 
-	// Check for required role (app_pipeleads)
-	if !a.hasRequiredRole(claims, "app_pipeleads") {
+	// Require the ProjectBaser entitlement before creating an application session.
+	if !a.hasRequiredRole(claims, requiredKeycloakRole) {
 		a.logger.Warn("User does not have required role",
 			mlog.String("email", claims.Email),
 			mlog.String("keycloak_sub", claims.Sub))
@@ -232,4 +234,3 @@ func (a *API) handleKeycloakUserInfo(w http.ResponseWriter, r *http.Request) {
 
 	jsonBytesResponse(w, http.StatusOK, jsonBytes)
 }
-
