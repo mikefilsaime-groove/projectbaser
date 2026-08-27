@@ -334,3 +334,57 @@ func TestReorderCategoryBoards(t *testing.T) {
 		assert.Nil(t, newOrder)
 	})
 }
+
+func TestValidateCategoryBoardAssignment(t *testing.T) {
+	t.Run("rejects a category from another team", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
+		th.Store.EXPECT().GetCategory("category_id").Return(&model.Category{
+			ID:     "category_id",
+			UserID: "user_id",
+			TeamID: "other_team_id",
+		}, nil)
+
+		err := th.App.validateCategoryBoardAssignment("team_id", "user_id", "category_id", []string{"board_id"})
+		assert.Error(t, err)
+		assert.True(t, model.IsErrBadRequest(err))
+	})
+
+	t.Run("rejects a board from another team", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
+		th.Store.EXPECT().GetCategory("category_id").Return(&model.Category{
+			ID:     "category_id",
+			UserID: "user_id",
+			TeamID: "team_id",
+		}, nil)
+		th.Store.EXPECT().GetBoard("board_id").Return(&model.Board{
+			ID:     "board_id",
+			TeamID: "other_team_id",
+		}, nil)
+
+		err := th.App.validateCategoryBoardAssignment("team_id", "user_id", "category_id", []string{"board_id"})
+		assert.Error(t, err)
+		assert.True(t, model.IsErrBadRequest(err))
+	})
+
+	t.Run("accepts a board and category from the requested team", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
+		th.Store.EXPECT().GetCategory("category_id").Return(&model.Category{
+			ID:     "category_id",
+			UserID: "user_id",
+			TeamID: "team_id",
+		}, nil)
+		th.Store.EXPECT().GetBoard("board_id").Return(&model.Board{
+			ID:     "board_id",
+			TeamID: "team_id",
+		}, nil)
+
+		err := th.App.validateCategoryBoardAssignment("team_id", "user_id", "category_id", []string{"board_id"})
+		assert.NoError(t, err)
+	})
+}
