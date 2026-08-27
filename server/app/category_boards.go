@@ -147,6 +147,10 @@ func (a *App) AddUpdateUserCategoryBoard(teamID, userID, categoryID string, boar
 		return nil
 	}
 
+	if err := a.validateCategoryBoardAssignment(teamID, userID, categoryID, boardIDs); err != nil {
+		return err
+	}
+
 	err := a.store.AddUpdateCategoryBoard(userID, categoryID, boardIDs)
 	if err != nil {
 		return err
@@ -188,6 +192,47 @@ func (a *App) AddUpdateUserCategoryBoard(teamID, userID, categoryID string, boar
 		)
 		return nil
 	})
+
+	return nil
+}
+
+// validateCategoryBoardAssignment keeps a user's sidebar categories scoped to
+// the same team as the board being placed in them. The database uniqueness
+// constraint is per user and board, so without this check a cross-team request
+// could move a board out of its own team's sidebar.
+func (a *App) validateCategoryBoardAssignment(teamID, userID, categoryID string, boardIDs []string) error {
+	category, err := a.store.GetCategory(categoryID)
+	if err != nil {
+		return err
+	}
+	if category == nil {
+		return errCategoryNotFound
+	}
+	if category.DeleteAt != 0 {
+		return model.ErrCategoryDeleted
+	}
+	if category.UserID != userID {
+		return model.ErrCategoryPermissionDenied
+	}
+	if category.TeamID != teamID {
+		return model.NewErrInvalidCategory("category doesn't belong to the team")
+	}
+
+	for _, boardID := range boardIDs {
+		board, err := a.store.GetBoard(boardID)
+		if err != nil {
+			return err
+		}
+		if board == nil {
+			return model.NewErrNotFound("board")
+		}
+		if board.DeleteAt != 0 {
+			return model.NewErrNotFound("board")
+		}
+		if board.TeamID != teamID {
+			return model.NewErrInvalidCategory("board doesn't belong to the team")
+		}
+	}
 
 	return nil
 }
