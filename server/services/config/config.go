@@ -1,7 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"log"
+	"os"
+	"strconv"
 
 	"github.com/spf13/viper"
 )
@@ -134,6 +137,10 @@ func ReadConfigFile(configFilePath string) (*Configuration, error) {
 		return nil, err
 	}
 
+	if err := applyFileStorageEnvironment(&configuration); err != nil {
+		return nil, err
+	}
+
 	log.Println("readConfigFile")
 	log.Printf("%+v", removeSecurityData(configuration))
 
@@ -142,5 +149,78 @@ func ReadConfigFile(configFilePath string) (*Configuration, error) {
 
 func removeSecurityData(config Configuration) Configuration {
 	clean := config
+	if clean.DBConfigString != "" {
+		clean.DBConfigString = "[redacted]"
+	}
+	if clean.Secret != "" {
+		clean.Secret = "[redacted]"
+	}
+	if clean.FilesS3Config.AccessKeyID != "" {
+		clean.FilesS3Config.AccessKeyID = "[redacted]"
+	}
+	if clean.FilesS3Config.SecretAccessKey != "" {
+		clean.FilesS3Config.SecretAccessKey = "[redacted]"
+	}
 	return clean
+}
+
+// applyFileStorageEnvironment maps deployment-friendly environment variables
+// onto the nested file-storage configuration. Viper's AutomaticEnv supports
+// top-level values, but does not reliably unmarshal nested S3 values.
+func applyFileStorageEnvironment(config *Configuration) error {
+	setString := func(name string, destination *string) {
+		if value, ok := os.LookupEnv(name); ok {
+			*destination = value
+		}
+	}
+	setBool := func(name string, destination *bool) error {
+		value, ok := os.LookupEnv(name)
+		if !ok {
+			return nil
+		}
+		parsed, err := strconv.ParseBool(value)
+		if err != nil {
+			return fmt.Errorf("invalid %s: %w", name, err)
+		}
+		*destination = parsed
+		return nil
+	}
+	setInt64 := func(name string, destination *int64) error {
+		value, ok := os.LookupEnv(name)
+		if !ok {
+			return nil
+		}
+		parsed, err := strconv.ParseInt(value, 10, 64)
+		if err != nil {
+			return fmt.Errorf("invalid %s: %w", name, err)
+		}
+		*destination = parsed
+		return nil
+	}
+
+	setString("FOCALBOARD_FILES_DRIVER", &config.FilesDriver)
+	setString("FOCALBOARD_FILES_PATH", &config.FilesPath)
+	setString("FOCALBOARD_FILES_S3_ACCESS_KEY_ID", &config.FilesS3Config.AccessKeyID)
+	setString("FOCALBOARD_FILES_S3_SECRET_ACCESS_KEY", &config.FilesS3Config.SecretAccessKey)
+	setString("FOCALBOARD_FILES_S3_BUCKET", &config.FilesS3Config.Bucket)
+	setString("FOCALBOARD_FILES_S3_PATH_PREFIX", &config.FilesS3Config.PathPrefix)
+	setString("FOCALBOARD_FILES_S3_REGION", &config.FilesS3Config.Region)
+	setString("FOCALBOARD_FILES_S3_ENDPOINT", &config.FilesS3Config.Endpoint)
+
+	for name, destination := range map[string]*bool{
+		"FOCALBOARD_FILES_S3_SSL":     &config.FilesS3Config.SSL,
+		"FOCALBOARD_FILES_S3_SIGN_V2": &config.FilesS3Config.SignV2,
+		"FOCALBOARD_FILES_S3_SSE":     &config.FilesS3Config.SSE,
+		"FOCALBOARD_FILES_S3_TRACE":   &config.FilesS3Config.Trace,
+	} {
+		if err := setBool(name, destination); err != nil {
+			return err
+		}
+	}
+
+	if err := setInt64("FOCALBOARD_FILES_S3_TIMEOUT", &config.FilesS3Config.Timeout); err != nil {
+		return err
+	}
+
+	return nil
 }
